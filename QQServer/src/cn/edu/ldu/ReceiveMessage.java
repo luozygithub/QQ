@@ -8,6 +8,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
+import cn.edu.ldu.util.Dbutil;
 
 /**
  * ReceiveMessage，服务器接收消息和处理消息的线程类
@@ -38,15 +40,47 @@ public class ReceiveMessage extends Thread {
             //收到的数据转为消息对象
             Message msg=(Message)Translate.ByteToObject(packet.getData());
             String userId=msg.getUserId();//当前消息来自用户的id            
+            String password=msg.getPassword();//当前消息来自用户的mima         
             if (msg.getType().equalsIgnoreCase("M_LOGIN")) { //是M_LOGIN消息 
                 Message backMsg=new Message();
                 //假定只有2000、3000、8000三个帐号可以登录
-                if (!userId.equals("2000") && !userId.equals("3000") && !userId.equals("8000")) {//登录不成功
+                boolean flag=false;
+                boolean onlineflag=false;
+                for (int i=0;i<userList.size();i++) { 
+                      if (userId.equalsIgnoreCase(userList.get(i).getUserId())){
+                          onlineflag=true;
+                      }
+                }
+                System.out.println(onlineflag);
+                if(onlineflag){
+                    //判断用户是否在线
+                    backMsg.setType("M_UserOnline");
+                    byte[] buf=Translate.ObjectToByte(backMsg);
+                    DatagramPacket backPacket=new DatagramPacket(buf,buf.length,packet.getAddress(),packet.getPort());//向登录用户发送的报文
+                    serverSocket.send(backPacket); //发送
+                    continue;
+                }
+                System.err.println( backMsg.getType());
+                Dbutil dbutil = new Dbutil();
+		String sql = "select * from user where id='" + userId + "'";
+		Connection connection = dbutil.getCon();
+		Statement statement = (Statement) connection.createStatement();
+		ResultSet rs = statement.executeQuery(sql);
+                if (rs.next()) {//登录不成功
+                    	String sql2="select * from user where password='"+password+"'";
+				rs=statement.executeQuery(sql2);
+				if(rs.next()){
+                                    flag=true;
+                                }
+                }
+              
+                if (!flag) {
                     backMsg.setType("M_FAILURE");
                     byte[] buf=Translate.ObjectToByte(backMsg);
                     DatagramPacket backPacket=new DatagramPacket(buf,buf.length,packet.getAddress(),packet.getPort());//向登录用户发送的报文
-                    serverSocket.send(backPacket); //发送                  
-                }else { //登录成功
+                    serverSocket.send(backPacket); //发送
+                }else{ //登录成功
+    
                     backMsg.setType("M_SUCCESS");
                     byte[] buf=Translate.ObjectToByte(backMsg);
                     DatagramPacket backPacket=new DatagramPacket(buf,buf.length,packet.getAddress(),packet.getPort());//向登录用户发送的报文
@@ -103,7 +137,7 @@ public class ReceiveMessage extends Thread {
                     serverSocket.send(newPacket);
                 }//end for 
             }//end if
-            } catch (IOException | NumberFormatException ex) {  }
+            } catch (Exception e) {  }
         }//end while
     }//end run
 }//end class

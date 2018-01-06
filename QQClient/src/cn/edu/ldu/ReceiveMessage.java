@@ -23,7 +23,7 @@ public class ReceiveMessage extends Thread{
     public ReceiveMessage(DatagramSocket socket,ClientUI parentUI) {
         clientSocket=socket; //会话套接字
         this.parentUI=parentUI; //父类
-    }   
+    }  
     @Override
     public void run() {
         while (true) { //无限循环，处理收到的各类消息
@@ -51,7 +51,7 @@ public class ReceiveMessage extends Thread{
             }else if (msg.getType().equalsIgnoreCase("M_QUIT")) { //是其他用户下线消息
                 playSound("/cn/edu/ldu/sound/leave.wav");//消息提示音  
                 //更新消息窗口
-                parentUI.txtArea.append(userId+" 大步流星离开聊天室...\n");
+                parentUI.txtArea.append(userId+" 下线...\n");
                 //下线用户从列表删除
                 listModel.remove(listModel.indexOf(userId));
                 parentUI.userList.setModel(listModel);

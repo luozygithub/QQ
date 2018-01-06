@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,6 +18,7 @@ public class ClientUI extends javax.swing.JFrame {
     private DatagramSocket clientSocket; //客户机套接字
     private Message msg; //消息对象
     private byte[] data=new byte[8096]; //8K字节数组
+    Thread recvThread;
     /**
      * Creates new form ClientUI
      */
@@ -25,6 +28,7 @@ public class ClientUI extends javax.swing.JFrame {
         int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width)/2;
         int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height)/2;
         this.setLocation(x, y);
+        
     }
     /**
      * 构造函数
@@ -32,11 +36,13 @@ public class ClientUI extends javax.swing.JFrame {
      * @param msg 登录消息对象
      */
     public ClientUI(DatagramSocket socket,Message msg) {
+       
         this(); //调用无参数构造函数，初始化界面
+
         clientSocket=socket; //初始化会话套接字
         this.msg=msg; //登录消息
         //创建客户机消息接收和处理线程
-        Thread recvThread=new ReceiveMessage(clientSocket,this);
+        recvThread=new ReceiveMessage(clientSocket,this);
         recvThread.start();//启动消息线程    
     }
 
@@ -57,7 +63,7 @@ public class ClientUI extends javax.swing.JFrame {
         rightScrollPane = new javax.swing.JScrollPane();
         userList = new javax.swing.JList<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -148,22 +154,11 @@ public class ClientUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE);
         }       
     }//GEN-LAST:event_btnSendActionPerformed
-    /**
-     * 点击窗体关闭按钮，关闭窗体之前发送 "M_QUIT" 下线消息
-     * @param evt 窗体事件
-     */
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        try {
-            msg.setType("M_QUIT"); //消息类型
-            msg.setText(null);
-            data=Translate.ObjectToByte(msg); //消息对象序列化
-            //构建发送
-            DatagramPacket packet=new DatagramPacket(data,data.length,msg.getToAddr(),msg.getToPort());       
-            clientSocket.send(packet); //发送
-        } catch (IOException ex) { }
-        clientSocket.close(); //关闭套接字
-    }//GEN-LAST:event_formWindowClosing
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+     
+    }//GEN-LAST:event_formWindowClosing
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSend;
     private javax.swing.JScrollPane leftScrollPane1;
