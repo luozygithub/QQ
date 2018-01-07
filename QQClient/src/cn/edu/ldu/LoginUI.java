@@ -51,7 +51,14 @@ public class LoginUI extends javax.swing.JDialog {
         txtRemotePort = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("登录界面");
+        setBackground(new java.awt.Color(204, 255, 255));
         setIconImage(null);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/Login.png"))); // NOI18N
 
@@ -75,6 +82,11 @@ public class LoginUI extends javax.swing.JDialog {
 
         chkRemember.setText("记住密码");
         chkRemember.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        chkRemember.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkRememberActionPerformed(evt);
+            }
+        });
 
         chkAutoLogin.setText("自动登录");
         chkAutoLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -213,7 +225,7 @@ public class LoginUI extends javax.swing.JDialog {
             client.setTitle(msg.getUserId()); //设置标题
             client.setVisible(true); //显示会话窗体     
          */
-        }else if(true){ //登录失败
+        }else if(backMsg.getType().equalsIgnoreCase("M_UserOnline")){ //登录失败
              JOptionPane.showMessageDialog(null, "用户已存在\n", "登录失败",JOptionPane.ERROR_MESSAGE);  
           
         }else{
@@ -230,6 +242,16 @@ public class LoginUI extends javax.swing.JDialog {
         RegisterUI re=new RegisterUI(); //创建客户机界面
          re.setVisible(true);
     }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void chkRememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkRememberActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_chkRememberActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+         System.exit(0);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

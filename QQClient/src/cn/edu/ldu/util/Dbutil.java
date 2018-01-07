@@ -9,6 +9,7 @@ import com.mysql.jdbc.PreparedStatement;
 import cn.edu.ldu.cls.User;
 import com.mysql.jdbc.Statement;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class Dbutil {
 	private static String dbUrl="jdbc:mysql://localhost:3307/qq?useUnicode=true&characterEncoding=UTF-8";
@@ -44,7 +45,9 @@ public class Dbutil {
 		Connection connection = dbutil.getCon();
                 Statement statement = (Statement) connection.createStatement();
                 statement.executeUpdate(sql);
-             }catch(Exception e){}
+             }catch(Exception e){
+                  JOptionPane.showMessageDialog(null, "用户已注册", "错误提示", JOptionPane.ERROR_MESSAGE);
+             }
         }
 	
 	@SuppressWarnings("unused")

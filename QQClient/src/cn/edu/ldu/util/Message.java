@@ -56,5 +56,17 @@ public class Message implements Serializable {
     }
     public void setTargetId(String targetId) {
         this.targetId = targetId;
-    }   
+    }  
+    /*
+    @Override
+    public Message clone(){
+        Message mes=null;
+        try{
+        mes=(Message)super.clone();
+        }catch(CloneNotSupportedException e){
+            e.printStackTrace();
+        }
+        return mes;
+    }
+    */
 }
