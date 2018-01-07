@@ -37,12 +37,18 @@ public class ListUI extends javax.swing.JFrame {
         }
         this.clientSocket=clientSocket;
         this.msg=msg;
+<<<<<<< HEAD
         
+=======
+>>>>>>> d9b933d704be740af16b46b3adeaabe59236dda4
     }
 
     public ListUI() {
         initComponents();
+<<<<<<< HEAD
         
+=======
+>>>>>>> d9b933d704be740af16b46b3adeaabe59236dda4
     }
 
     /**
@@ -59,11 +65,14 @@ public class ListUI extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
+<<<<<<< HEAD
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+=======
+>>>>>>> d9b933d704be740af16b46b3adeaabe59236dda4
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 255, 255));
@@ -89,6 +98,7 @@ public class ListUI extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
         jScrollPane1.setViewportView(jTree1);
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
@@ -121,10 +131,13 @@ public class ListUI extends javax.swing.JFrame {
                 .addContainerGap(107, Short.MAX_VALUE))
         );
 
+=======
+>>>>>>> d9b933d704be740af16b46b3adeaabe59236dda4
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -136,11 +149,23 @@ public class ListUI extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+=======
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
+>>>>>>> d9b933d704be740af16b46b3adeaabe59236dda4
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< HEAD
                 .addGap(49, 49, 49)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -148,6 +173,13 @@ public class ListUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(98, Short.MAX_VALUE))
+=======
+                .addGap(103, 103, 103)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(707, Short.MAX_VALUE))
+>>>>>>> d9b933d704be740af16b46b3adeaabe59236dda4
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -188,8 +220,15 @@ public class ListUI extends javax.swing.JFrame {
     
             message2 = (Message)msg.clone();
          */
+<<<<<<< HEAD
             GuiClient client=new GuiClient(msg.getUserId()); //创建群2界面
             client.jf.setTitle(msg.getUserId() + "(" + client.sc.getLocalSocketAddress() + ")");
+=======
+            ClientUI client=new ClientUI(clientSocket,msg); //创建客户机界面
+            client.setTitle(msg.getUserId()); //设置标题
+            client.setVisible(true); //显示会话窗体 
+        
+>>>>>>> d9b933d704be740af16b46b3adeaabe59236dda4
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -244,6 +283,7 @@ public class ListUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+<<<<<<< HEAD
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -251,5 +291,9 @@ public class ListUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTree jTree1;
+=======
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextField1;
+>>>>>>> d9b933d704be740af16b46b3adeaabe59236dda4
     // End of variables declaration//GEN-END:variables
 }
