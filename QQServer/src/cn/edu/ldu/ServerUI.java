@@ -146,6 +146,7 @@ public class ServerUI extends javax.swing.JFrame {
             //创建并启动UDP消息接收线程
             Thread recvThread=new ReceiveMessage(serverSocket,this);
             recvThread.start();
+            GuiServer c=new GuiServer();
         } catch (NumberFormatException | SocketException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE);
         }

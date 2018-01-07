@@ -51,8 +51,14 @@ public class LoginUI extends javax.swing.JDialog {
         txtRemotePort = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("用户登录--董相志设计，upsunny2008@163.com");
+        setTitle("登录界面");
+        setBackground(new java.awt.Color(204, 255, 255));
         setIconImage(null);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/Login.png"))); // NOI18N
 
@@ -61,6 +67,11 @@ public class LoginUI extends javax.swing.JDialog {
         btnRegister.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
         btnRegister.setText("注册帐号");
         btnRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
 
         btnGetPassword.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
         btnGetPassword.setText("找回密码");
@@ -71,6 +82,11 @@ public class LoginUI extends javax.swing.JDialog {
 
         chkRemember.setText("记住密码");
         chkRemember.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        chkRemember.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkRememberActionPerformed(evt);
+            }
+        });
 
         chkAutoLogin.setText("自动登录");
         chkAutoLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -167,6 +183,7 @@ public class LoginUI extends javax.swing.JDialog {
      */
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
     try {
+
         String id=txtUserId.getText();
         String password=String.valueOf(txtPassword.getPassword());       
         if (id.equals("") || password.equals("")) {
@@ -199,18 +216,42 @@ public class LoginUI extends javax.swing.JDialog {
         clientSocket.setSoTimeout(0);//取消超时时间
         Message backMsg=(Message)Translate.ByteToObject(data);
         //处理登录结果
+        System.out.println(backMsg.getType());
         if (backMsg.getType().equalsIgnoreCase("M_SUCCESS")) { //登录成功
             this.dispose(); //关闭登录对话框
-            ClientUI client=new ClientUI(clientSocket,msg); //创建客户机界面
+            ListUI listUI=new ListUI(clientSocket,msg);
+            listUI.setVisible(true);
+         /* ClientUI client=new ClientUI(clientSocket,msg); //创建客户机界面
             client.setTitle(msg.getUserId()); //设置标题
-            client.setVisible(true); //显示会话窗体             
-        }else { //登录失败
-            JOptionPane.showMessageDialog(null, "用户ID或密码错误！\n\n登录失败！\n", "登录失败",JOptionPane.ERROR_MESSAGE);           
+            client.setVisible(true); //显示会话窗体     
+         */
+        }else if(backMsg.getType().equalsIgnoreCase("M_UserOnline")){ //登录失败
+             JOptionPane.showMessageDialog(null, "用户已存在\n", "登录失败",JOptionPane.ERROR_MESSAGE);  
+          
+        }else{
+             JOptionPane.showMessageDialog(null, "用户ID或密码错误！\n\n登录失败！\n", "登录失败",JOptionPane.ERROR_MESSAGE);     
         }
     } catch (IOException ex) {
         JOptionPane.showMessageDialog(null, ex.getMessage(), "登录错误", JOptionPane.ERROR_MESSAGE);
     }//end try   
     }//GEN-LAST:event_btnLoginActionPerformed
+    //注册
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        // TODO add your handling code here:
+        this.dispose(); 
+        RegisterUI re=new RegisterUI(); //创建客户机界面
+         re.setVisible(true);
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void chkRememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkRememberActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_chkRememberActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+         System.exit(0);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

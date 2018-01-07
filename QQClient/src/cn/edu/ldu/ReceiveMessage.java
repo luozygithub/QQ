@@ -18,12 +18,14 @@ public class ReceiveMessage extends Thread{
     private DatagramSocket clientSocket; //会话套接字
     private ClientUI parentUI; //父类
     private byte[] data=new byte[8096]; //8K字节数组
+    
     private DefaultListModel listModel=new DefaultListModel(); //列表Model
     //构造函数
     public ReceiveMessage(DatagramSocket socket,ClientUI parentUI) {
         clientSocket=socket; //会话套接字
         this.parentUI=parentUI; //父类
-    }   
+        listModel=new DefaultListModel(); 
+    }  
     @Override
     public void run() {
         while (true) { //无限循环，处理收到的各类消息
@@ -51,10 +53,10 @@ public class ReceiveMessage extends Thread{
             }else if (msg.getType().equalsIgnoreCase("M_QUIT")) { //是其他用户下线消息
                 playSound("/cn/edu/ldu/sound/leave.wav");//消息提示音  
                 //更新消息窗口
-                parentUI.txtArea.append(userId+" 大步流星离开聊天室...\n");
+                parentUI.txtArea.append(userId+" 下线...\n");
                 //下线用户从列表删除
-                listModel.remove(listModel.indexOf(userId));
-                parentUI.userList.setModel(listModel);
+                /*listModel.remove(listModel.indexOf(userId));*/
+               /* parentUI.userList.setModel(listModel);*/
             }//end if  
           }catch (Exception ex) {
               JOptionPane.showMessageDialog(null, ex.getMessage(),"错误提示",JOptionPane.ERROR_MESSAGE);
