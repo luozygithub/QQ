@@ -54,6 +54,7 @@ public class LoginUI extends javax.swing.JDialog {
         setTitle("登录界面");
         setBackground(new java.awt.Color(204, 255, 255));
         setIconImage(null);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -77,6 +78,11 @@ public class LoginUI extends javax.swing.JDialog {
         btnGetPassword.setText("找回密码");
         btnGetPassword.setBorderPainted(false);
         btnGetPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGetPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGetPasswordActionPerformed(evt);
+            }
+        });
 
         txtPassword.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
 
@@ -252,6 +258,13 @@ public class LoginUI extends javax.swing.JDialog {
         // TODO add your handling code here:
          System.exit(0);
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnGetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetPasswordActionPerformed
+        // TODO add your handling code here:
+        this.dispose(); 
+        GetPasswordUI re=new GetPasswordUI (); //创建客户机界面
+        re.setVisible(true);
+    }//GEN-LAST:event_btnGetPasswordActionPerformed
 
     /**
      * @param args the command line arguments

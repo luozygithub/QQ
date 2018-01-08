@@ -40,7 +40,9 @@ public class ReceiveMessage extends Thread {
             //收到的数据转为消息对象
             Message msg=(Message)Translate.ByteToObject(packet.getData());
             String userId=msg.getUserId();//当前消息来自用户的id            
-            String password=msg.getPassword();//当前消息来自用户的mima         
+            String password=msg.getPassword();//当前消息来自用户的   
+            String encryptPassword=Cryptography.getHash(password, "SHA-256");
+                System.err.println(Cryptography.getHash(password, "SHA-256"));
             if (msg.getType().equalsIgnoreCase("M_LOGIN")) { //是M_LOGIN消息 
                 Message backMsg=new Message();
                 //假定只有2000、3000、8000三个帐号可以登录
@@ -67,7 +69,7 @@ public class ReceiveMessage extends Thread {
 		Statement statement = (Statement) connection.createStatement();
 		ResultSet rs = statement.executeQuery(sql);
                 if (rs.next()) {//登录不成功
-                    	String sql2="select * from user where password='"+password+"'";
+                    	String sql2="select * from user where password='"+encryptPassword+"'";
 				rs=statement.executeQuery(sql2);
 				if(rs.next()){
                                     flag=true;

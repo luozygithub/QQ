@@ -12,6 +12,31 @@ package cn.edu.ldu.cls;
 public class User {
     String id;
     String password;
+    String Tel;
+    String Nickname;
+
+    public String getTel() {
+        return Tel;
+    }
+
+    public void setTel(String Tel) {
+        this.Tel = Tel;
+    }
+
+    public String getNickname() {
+        return Nickname;
+    }
+
+    public void setNickname(String Nickname) {
+        this.Nickname = Nickname;
+    }
+
+    public User(String id, String password, String Tel, String Nickname) {
+        this.id = id;
+        this.password = password;
+        this.Tel = Tel;
+        this.Nickname = Nickname;
+    }
 
     public User() {
     }

@@ -9,6 +9,6 @@ package cn.edu.ldu;
  *
  * @author 罗中运
  */
-public class ListMessage {
+public class ListMessage extends Thread{
     
 }

@@ -41,12 +41,12 @@ public class Dbutil {
         public void Register(User user){
              try{
                 Dbutil dbutil = new Dbutil();
-		String sql = "insert into user values('"+user.getId()+"','"+user.getPassword()+"')";
+		String sql = "insert into user values('"+user.getId()+"','"+user.getPassword()+"','"+user.getTel()+"','"+user.getNickname()+"')";
 		Connection connection = dbutil.getCon();
                 Statement statement = (Statement) connection.createStatement();
                 statement.executeUpdate(sql);
              }catch(Exception e){
-                  JOptionPane.showMessageDialog(null, "用户已注册", "错误提示", JOptionPane.ERROR_MESSAGE);
+                  JOptionPane.showMessageDialog(null, "用户已被注册", "错误提示", JOptionPane.ERROR_MESSAGE);
              }
         }
 	
