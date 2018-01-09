@@ -1,5 +1,6 @@
 package cn.edu.ldu;
 
+import cn.edu.ldu.util.LMessage;
 import cn.edu.ldu.util.Message;
 import cn.edu.ldu.util.Translate;
 import java.awt.Toolkit;
@@ -197,6 +198,7 @@ public class LoginUI extends javax.swing.JDialog {
             return;
         }
         //获取服务器地址和端口
+    
         String remoteName=txtRemoteName.getText();
         InetAddress remoteAddr=InetAddress.getByName(remoteName);
         int remotePort=Integer.parseInt(txtRemotePort.getText());   
@@ -215,7 +217,28 @@ public class LoginUI extends javax.swing.JDialog {
         DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,remotePort);
         //发送登录报文
         clientSocket.send(packet);
+               
+       /*
+            String lremoteName="127.0.0.1";
+            InetAddress lremoteAddr=InetAddress.getByName(lremoteName);
+            int lremotePort=60000;
+            DatagramSocket LSocket=new DatagramSocket();
+            LMessage listmsg=new LMessage();
+            listmsg.setUserId("132");
+            listmsg.setType("M_LOGIN"); //登录消息类型
+            listmsg.setToAddr(lremoteAddr); //目标地址
+            listmsg.setToPort(lremotePort); //目标端口
+            byte[] data2=Translate.ObjectToByte(listmsg); //消息对象序列化
+            //定义登录报文
+            DatagramPacket lpacket=new DatagramPacket(data2,data2.length,lremoteAddr,lremotePort);
+            //发送登录报文
+            LSocket.send(lpacket);
+            */
         
+        
+        
+        /*DatagramPacket packet2=new DatagramPacket(data,data.length,remoteAddr,60000);
+        clientSocket.send(packet2);*/
         //接收服务器回送的报文
         DatagramPacket backPacket=new DatagramPacket(data,data.length);
         clientSocket.receive(backPacket); 

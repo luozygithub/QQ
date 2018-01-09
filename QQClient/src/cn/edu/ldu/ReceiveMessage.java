@@ -10,10 +10,6 @@ import java.net.URL;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-/**
- * 功能ReceiveMessage客户机接收消息和处理消息的线程类
- * @author  董相志，版权所有2016--2018，upsunny2008@163.com
- */
 public class ReceiveMessage extends Thread{
     private DatagramSocket clientSocket; //会话套接字
     private ClientUI parentUI; //父类
@@ -42,8 +38,9 @@ public class ReceiveMessage extends Thread{
                 //新上线用户加入列表
                 listModel.add(listModel.getSize(), userId);
                 parentUI.userList.setModel(listModel);
+               
             }else if (msg.getType().equalsIgnoreCase("M_ACK")) { //是服务器确认消息
-                //登录成功，将自己加入用户列表
+                //登录成功，将加入用户列表
                 listModel.add(listModel.getSize(), userId);
                 parentUI.userList.setModel(listModel);
             }else if (msg.getType().equalsIgnoreCase("M_MSG")) { //是普通会话消息

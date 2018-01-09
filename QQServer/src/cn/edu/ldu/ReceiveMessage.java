@@ -36,7 +36,7 @@ public class ReceiveMessage extends Thread {
         while (true) { //循环处理收到的各种消息
             try {
             packet=new DatagramPacket(data,data.length);//构建接收报文
-            serverSocket.receive(packet);//接收客户机数据
+            serverSocket.receive(packet);//接收客户机数据receive
             //收到的数据转为消息对象
             Message msg=(Message)Translate.ByteToObject(packet.getData());
             String userId=msg.getUserId();//当前消息来自用户的id            
@@ -45,7 +45,7 @@ public class ReceiveMessage extends Thread {
                 System.err.println(Cryptography.getHash(password, "SHA-256"));
             if (msg.getType().equalsIgnoreCase("M_LOGIN")) { //是M_LOGIN消息 
                 Message backMsg=new Message();
-                //假定只有2000、3000、8000三个帐号可以登录
+         
                 boolean flag=false;
                 boolean onlineflag=false;
                 for (int i=0;i<userList.size();i++) { 
@@ -59,10 +59,10 @@ public class ReceiveMessage extends Thread {
                     backMsg.setType("M_UserOnline");
                     byte[] buf=Translate.ObjectToByte(backMsg);
                     DatagramPacket backPacket=new DatagramPacket(buf,buf.length,packet.getAddress(),packet.getPort());//向登录用户发送的报文
-                    serverSocket.send(backPacket); //发送
+                    serverSocket.send(backPacket); //发送send
                     continue;
                 }
-                System.err.println( backMsg.getType());
+   
                 Dbutil dbutil = new Dbutil();
 		String sql = "select * from user where id='" + userId + "'";
 		Connection connection = dbutil.getCon();
@@ -139,7 +139,9 @@ public class ReceiveMessage extends Thread {
                     serverSocket.send(newPacket);
                 }//end for 
             }//end if
-            } catch (Exception e) {  }
+            } catch (Exception e) { 
+                    System.out.println("ReceiveMessage");
+            }
         }//end while
     }//end run
 }//end class

@@ -6,9 +6,9 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Message implements Serializable{
 	
-	String name;
-	String msg;
-	Date date;
+            String name;
+            String msg;
+            Date date;
 	
 	public Message(){
 		

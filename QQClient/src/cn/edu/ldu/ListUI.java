@@ -6,40 +6,81 @@ import java.awt.HeadlessException;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import cn.edu.ldu.util.LMessage;
+import java.awt.Toolkit;
 /**
  *
  * @author 罗中运
  */
 public class ListUI extends javax.swing.JFrame {
+    InetAddress remoteAddr;
+    String remoteName;
+    int remotePort=60000;
+    DatagramSocket LSocket;
     Message msg=new Message();
+    LMessage listmsg=new LMessage();
     DatagramSocket clientSocket;
     private byte[] data=new byte[8096]; //8K字节数组
     /**
      * Creates new form ListUI
      */
     
-    public ListUI(DatagramSocket clientSocket,Message msg) throws HeadlessException {
-        initComponents();
+    public ListUI(DatagramSocket clientSocket,Message msg) throws HeadlessException, SocketException {
+        this();
+
         try {
-            this.clientSocket = new DatagramSocket();
-        } catch (SocketException ex) {
+            
+            try {
+                this.clientSocket = new DatagramSocket();
+            } catch (SocketException ex) {
+                Logger.getLogger(ListUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.clientSocket=clientSocket;
+            this.msg=msg;
+            //tianjianlist 
+            remoteName="127.0.0.1";
+            remoteAddr=InetAddress.getByName(remoteName);
+           
+          
+            listmsg.setUserId(msg.getUserId());
+            listmsg.setType("M_LOGIN"); //登录消息类型
+            listmsg.setToAddr(remoteAddr); //目标地址
+            listmsg.setToPort(remotePort); //目标端口
+            byte[] data=Translate.ObjectToByte(listmsg); //消息对象序列化
+            //定义登录报文
+            DatagramPacket listpacket=new DatagramPacket(data,data.length,remoteAddr,remotePort);
+            //发送登录报文
+            LSocket.send(listpacket);
+            ListMessage listThread;
+            listThread = new ListMessage(LSocket,this);
+            listThread.start();//启动消息线程
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ListUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(ListUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.clientSocket=clientSocket;
-        this.msg=msg;
         
     }
 
     public ListUI() {
+        try {
+            this.LSocket = new DatagramSocket();
+        } catch (SocketException ex) {
+            Logger.getLogger(ListUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
-        
+        int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width);
+        int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height)/2;
+        this.setLocation(x, y);
     }
 
     /**
@@ -143,21 +184,16 @@ public class ListUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
+        
+  
             ClientUI client=new ClientUI(clientSocket,msg); //创建客户机界面
             client.setTitle(msg.getUserId()); //设置标题
             client.setVisible(true); //显示会话窗体 
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        /*
-            DatagramSocket clientSocket2=clientSocket;
-            Message message2;
-    
-            message2 = (Message)msg.clone();
-         */
+     
             group2Client client=new group2Client(msg.getUserId()); //创建群2界面
             client.jf.setTitle(msg.getUserId() + "(" + client.sc.getLocalSocketAddress() + ")");
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -171,16 +207,23 @@ public class ListUI extends javax.swing.JFrame {
             //构建发送
             DatagramPacket packet=new DatagramPacket(data,data.length,msg.getToAddr(),msg.getToPort());       
             clientSocket.send(packet); //发送
+           
+            listmsg.setType("M_QUIT"); //登录消息类型
+            byte[] data=Translate.ObjectToByte(listmsg); //消息对象序列化
+            //定义登录报文
+            DatagramPacket listpacket=new DatagramPacket(data,data.length,remoteAddr,remotePort);
+            //发送登录报文
+            LSocket.send(listpacket);
+            
         } catch (IOException ex) { }
         clientSocket.close(); //关闭套接字
     }//GEN-LAST:event_formWindowClosing
 
     private void FriendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FriendListMouseClicked
         // TODO add your handling code here:
-        
+
         System.out.println(FriendList.getSelectedValue());
-        
-        
+
     }//GEN-LAST:event_FriendListMouseClicked
 
     /**
@@ -219,7 +262,7 @@ public class ListUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> FriendList;
+    public javax.swing.JList<String> FriendList;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

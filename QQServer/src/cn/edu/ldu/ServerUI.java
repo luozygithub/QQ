@@ -142,10 +142,20 @@ public class ServerUI extends javax.swing.JFrame {
             int hostPort=Integer.parseInt(txtHostPort.getText());
             //创建UDP数据报套接字,在指定端口侦听
             DatagramSocket serverSocket=new DatagramSocket(hostPort);
+           /* DatagramSocket serverSocket2=new DatagramSocket(60000);*/
+           
+           
+           Thread listThread=new ListServer();
+           listThread.start();
+        
+        
             txtArea.append("服务器开始侦听...\n");
             //创建并启动UDP消息接收线程
             Thread recvThread=new ReceiveMessage(serverSocket,this);
             recvThread.start();
+            /////
+           /* Thread ListServer=new ListServer(serverSocket2,this);
+            ListServer.start();*/
             group2Server c=new group2Server();
         } catch (NumberFormatException | SocketException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE);

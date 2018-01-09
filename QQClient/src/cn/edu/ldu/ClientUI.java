@@ -18,7 +18,7 @@ public class ClientUI extends javax.swing.JFrame {
     private DatagramSocket clientSocket; //客户机套接字
     private Message msg; //消息对象
     private byte[] data=new byte[8096]; //8K字节数组
-    Thread recvThread;
+   
     /**
      * Creates new form ClientUI
      */
@@ -42,6 +42,7 @@ public class ClientUI extends javax.swing.JFrame {
         clientSocket=socket; //初始化会话套接字
         this.msg=msg; //登录消息
         //创建客户机消息接收和处理线程
+        Thread recvThread;
         recvThread=new ReceiveMessage(clientSocket,this);
         recvThread.start();//启动消息线程    
     }
