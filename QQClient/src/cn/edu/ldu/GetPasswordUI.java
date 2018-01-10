@@ -110,7 +110,7 @@ public class GetPasswordUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(108, 108, 108)
                         .addComponent(jButtonGetpasswordSubmit)
-                        .addGap(83, 83, 83)
+                        .addGap(68, 68, 68)
                         .addComponent(jButtonGetpasswordResetting)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)

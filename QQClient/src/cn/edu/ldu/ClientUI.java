@@ -9,7 +9,11 @@ import java.net.DatagramSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import java.applet.AudioClip;  
+import java.io.*;  
+import java.applet.Applet;  
+import java.net.MalformedURLException;  
+import java.net.URL;  
 /**
  * ClientUI，客户机聊天界面类
  * @author  董相志，版权所有2016--2018，upsunny2008@163.com
@@ -24,11 +28,20 @@ public class ClientUI extends javax.swing.JFrame {
      */
     public ClientUI() {
         initComponents();
+       
         //设置窗体位置到屏幕中央
         int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width)/2;
         int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height)/2;
         this.setLocation(x, y);
+        playMusic("/cn/edu/ldu/sound/K.wav");  
         
+    }
+    private void playMusic(String filename) {
+        URL url = AudioClip.class.getResource(filename);
+        AudioClip sound;
+        sound = Applet.newAudioClip(url);
+        sound.play();
+        System.out.println("cn.edu.ldu.ClientUI.playMusic()");
     }
     /**
      * 构造函数
@@ -85,9 +98,15 @@ public class ClientUI extends javax.swing.JFrame {
         txtInput.setFont(new java.awt.Font("宋体", 1, 16)); // NOI18N
         txtInput.setLineWrap(true);
         txtInput.setRows(5);
+        txtInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtInputKeyPressed(evt);
+            }
+        });
         leftScrollPane2.setViewportView(txtInput);
 
         btnSend.setBackground(new java.awt.Color(153, 204, 255));
+        btnSend.setFont(new java.awt.Font("宋体", 1, 12)); // NOI18N
         btnSend.setText("发  送");
         btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +116,6 @@ public class ClientUI extends javax.swing.JFrame {
 
         rightScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "在线用户", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("宋体", 1, 14))); // NOI18N
 
-        userList.setBackground(new java.awt.Color(255, 204, 255));
         userList.setFont(new java.awt.Font("宋体", 1, 14)); // NOI18N
         rightScrollPane.setViewportView(userList);
 
@@ -115,8 +133,8 @@ public class ClientUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(leftScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
                             .addComponent(leftScrollPane2))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rightScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rightScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -157,8 +175,38 @@ public class ClientUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-     
+        /*
+        try {
+            msg.setType("M_QUIT"); //消息类型
+            msg.setText(null);
+            data=Translate.ObjectToByte(msg); //消息对象序列化
+            //构建发送
+            DatagramPacket packet=new DatagramPacket(data,data.length,msg.getToAddr(),msg.getToPort());       
+            clientSocket.send(packet); //发送
+        } catch (IOException ex) {
+            Logger.getLogger(ClientUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        */
     }//GEN-LAST:event_formWindowClosing
+
+    private void txtInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInputKeyPressed
+        // TODO add your handling code here:
+       try {
+           if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            msg.setText(txtInput.getText());//获取输入的文本
+            msg.setType("M_MSG"); //普通会话消息
+            data=Translate.ObjectToByte(msg);//消息对象序列化
+            //构建发送报文
+            DatagramPacket packet=new DatagramPacket(data,data.length,msg.getToAddr(),msg.getToPort());
+            clientSocket.send(packet); //发送
+            txtInput.setText(""); //清空输入框
+           }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE);
+        }       
+       
+        
+    }//GEN-LAST:event_txtInputKeyPressed
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSend;

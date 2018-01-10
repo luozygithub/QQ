@@ -31,6 +31,7 @@ public class ReceiveMessage extends Thread{
             Message msg=(Message)Translate.ByteToObject(data);//还原消息对象
             String userId=msg.getUserId(); //当前用户id
             //根据消息类型分类处理
+            
             if (msg.getType().equalsIgnoreCase("M_LOGIN")) { //是其他用户的登录消息
                 playSound("/cn/edu/ldu/sound/fadeIn.wav");//上线提示音  
                 //更新消息窗口

@@ -1,6 +1,5 @@
 package cn.edu.ldu;
 
-import cn.edu.ldu.util.LMessage;
 import cn.edu.ldu.util.Message;
 import cn.edu.ldu.util.Translate;
 import java.awt.Toolkit;
@@ -204,6 +203,7 @@ public class LoginUI extends javax.swing.JDialog {
         int remotePort=Integer.parseInt(txtRemotePort.getText());   
         //创建UDP套接字
         DatagramSocket clientSocket=new DatagramSocket();
+      
         clientSocket.setSoTimeout(3000);//设置超时时间
         //构建用户登录消息
         Message msg=new Message();
@@ -217,25 +217,17 @@ public class LoginUI extends javax.swing.JDialog {
         DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,remotePort);
         //发送登录报文
         clientSocket.send(packet);
-               
-       /*
-            String lremoteName="127.0.0.1";
-            InetAddress lremoteAddr=InetAddress.getByName(lremoteName);
-            int lremotePort=60000;
-            DatagramSocket LSocket=new DatagramSocket();
-            LMessage listmsg=new LMessage();
-            listmsg.setUserId("132");
-            listmsg.setType("M_LOGIN"); //登录消息类型
-            listmsg.setToAddr(lremoteAddr); //目标地址
-            listmsg.setToPort(lremotePort); //目标端口
-            byte[] data2=Translate.ObjectToByte(listmsg); //消息对象序列化
-            //定义登录报文
-            DatagramPacket lpacket=new DatagramPacket(data2,data2.length,lremoteAddr,lremotePort);
-            //发送登录报文
-            LSocket.send(lpacket);
-            */
         
-        
+        Message msg2=new Message();
+        msg2.setUserId(id);//登录名       
+        msg2.setType("M_LOGIN"); //登录消息类型
+        msg.setToAddr(remoteAddr); //目标地址
+            
+        byte[] data2=Translate.ObjectToByte(msg2); 
+        DatagramSocket ChatSocket=new DatagramSocket();
+        msg2.setToPort(ChatSocket.getLocalPort()); //目标端口   
+        DatagramPacket packet2=new DatagramPacket(data2,data2.length,remoteAddr,20000);
+        ChatSocket.send(packet2);      
         
         /*DatagramPacket packet2=new DatagramPacket(data,data.length,remoteAddr,60000);
         clientSocket.send(packet2);*/
@@ -245,10 +237,10 @@ public class LoginUI extends javax.swing.JDialog {
         clientSocket.setSoTimeout(0);//取消超时时间
         Message backMsg=(Message)Translate.ByteToObject(data);
         //处理登录结果
-        System.out.println(backMsg.getType());
+
         if (backMsg.getType().equalsIgnoreCase("M_SUCCESS")) { //登录成功
             this.dispose(); //关闭登录对话框
-            ListUI listUI=new ListUI(clientSocket,msg);
+            ListUI listUI=new ListUI(clientSocket,ChatSocket,msg);
             listUI.setVisible(true);
          /* ClientUI client=new ClientUI(clientSocket,msg); //创建客户机界面
             client.setTitle(msg.getUserId()); //设置标题
@@ -269,7 +261,7 @@ public class LoginUI extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose(); 
         RegisterUI re=new RegisterUI(); //创建客户机界面
-         re.setVisible(true);
+        re.setVisible(true);
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void chkRememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkRememberActionPerformed

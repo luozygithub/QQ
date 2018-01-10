@@ -15,6 +15,23 @@ public class Message implements Serializable {
     private InetAddress toAddr=null; //目标用户地址
     private int toPort; //目标用户端口
     private String targetId=null; //目标用户id
+     private String targetUser=null; //目标用户id
+     private int targetPort;
+
+    public int getTargetPort() {
+        return targetPort;
+    }
+
+    public void setTargetPort(int targetPort) {
+        this.targetPort = targetPort;
+    }
+    public String getTargetUser() {
+        return targetUser;
+    }
+
+    public void setTargetUser(String targetUser) {
+        this.targetUser = targetUser;
+    }
     public String getUserId() {
         return userId;
     }
@@ -57,16 +74,5 @@ public class Message implements Serializable {
     public void setTargetId(String targetId) {
         this.targetId = targetId;
     }  
-    /*
-    @Override
-    public Message clone(){
-        Message mes=null;
-        try{
-        mes=(Message)super.clone();
-        }catch(CloneNotSupportedException e){
-            e.printStackTrace();
-        }
-        return mes;
-    }
-    */
+
 }

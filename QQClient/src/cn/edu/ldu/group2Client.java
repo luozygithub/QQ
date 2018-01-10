@@ -2,6 +2,7 @@ package cn.edu.ldu;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,7 +34,7 @@ public class group2Client {
 	JScrollPane jsp = new JScrollPane(jtainput);
 	JTextArea jtaoutput = new JTextArea();
 	JScrollPane jsp1 = new JScrollPane(jtaoutput);
-	JButton jb = new JButton("send");
+	JButton jb = new JButton("发送");
 	JButton jb_self = new JButton("私聊");
 	JPanel jp = new JPanel();
 	JPanel jp1 = new JPanel();
@@ -49,12 +50,14 @@ public class group2Client {
 	JComboBox jcb = new JComboBox(str);
 	
 	public group2Client(String clientname){
-		
+			
+
 		jp.setLayout(new GridLayout(2,1,10,10));
 		jp.add(jsp);
 		jp.add(jsp1);
-		jf.setSize(400,500);
-		jf.setBounds(600, 200, 400, 500);
+		jf.setSize(60,60);
+		jf.setBounds(600, 600, 600, 600);
+                 jf.setLocationRelativeTo(null); 
 		jf.add(jp,BorderLayout.CENTER);
 		jp1.add(jb);
 		jp1.add(jb_self);
@@ -67,7 +70,8 @@ public class group2Client {
 		dlm.addElement(new String(clientname));		
 		jf.add(jp2,BorderLayout.EAST);		
 		jf.setVisible(true);
-		
+		jp.setBorder(javax.swing.BorderFactory.createTitledBorder("聊天窗口"));
+                jp2.setBorder(javax.swing.BorderFactory.createTitledBorder("用户列表（地址和端口）"));
 		//选择私聊对象，私聊按钮才可用
 		jl.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
@@ -116,7 +120,7 @@ public class group2Client {
 		});
 		
 		try {
-			sc = new Socket("127.0.0.1",50000);
+			sc = new Socket("127.0.0.1",40000);
 			oos = new ObjectOutputStream(sc.getOutputStream());
 			
 			

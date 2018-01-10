@@ -45,7 +45,7 @@ public class group2Server {
 		jf.add(jp,BorderLayout.CENTER);
 		jp1.add(jb);
 		jf.add(jp1,BorderLayout.SOUTH);		
-		jf.setVisible(true);
+		//jf.setVisible(true);//////////////////////////////////////////////////////////
 		jf.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		
@@ -76,7 +76,7 @@ public class group2Server {
 		});
 		//开端口监听客户端是否有连接
 		try {
-			ss  = new ServerSocket(50000);  //9999端口
+			ss  = new ServerSocket(40000);  
 			
 			ServerThread st = new ServerThread();
 			st.start();

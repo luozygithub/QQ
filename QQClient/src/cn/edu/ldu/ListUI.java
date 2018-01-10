@@ -29,21 +29,24 @@ public class ListUI extends javax.swing.JFrame {
     Message msg=new Message();
     LMessage listmsg=new LMessage();
     DatagramSocket clientSocket;
+  DatagramSocket ChatSocket;
     private byte[] data=new byte[8096]; //8K字节数组
     /**
      * Creates new form ListUI
      */
     
-    public ListUI(DatagramSocket clientSocket,Message msg) throws HeadlessException, SocketException {
+    public ListUI(DatagramSocket clientSocket,DatagramSocket ChatSocket,Message msg) throws HeadlessException, SocketException {
         this();
 
         try {
             
             try {
                 this.clientSocket = new DatagramSocket();
+                
             } catch (SocketException ex) {
                 Logger.getLogger(ListUI.class.getName()).log(Level.SEVERE, null, ex);
             }
+            this.ChatSocket=ChatSocket;
             this.clientSocket=clientSocket;
             this.msg=msg;
             //tianjianlist 
@@ -63,6 +66,9 @@ public class ListUI extends javax.swing.JFrame {
             ListMessage listThread;
             listThread = new ListMessage(LSocket,this);
             listThread.start();//启动消息线程
+            
+            ChatMessage chatMessage=new ChatMessage(ChatSocket);
+            chatMessage.start();
         } catch (UnknownHostException ex) {
             Logger.getLogger(ListUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -96,7 +102,6 @@ public class ListUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         FriendList = new javax.swing.JList<>();
 
@@ -124,6 +129,8 @@ public class ListUI extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createTitledBorder("在线好友列表"));
+
         FriendList.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
         FriendList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "123", "000", "好友3", "好友4", "好友5" };
@@ -133,6 +140,9 @@ public class ListUI extends javax.swing.JFrame {
         FriendList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 FriendListMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                FriendListMousePressed(evt);
             }
         });
         jScrollPane2.setViewportView(FriendList);
@@ -146,16 +156,13 @@ public class ListUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
@@ -185,7 +192,7 @@ public class ListUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-  
+            
             ClientUI client=new ClientUI(clientSocket,msg); //创建客户机界面
             client.setTitle(msg.getUserId()); //设置标题
             client.setVisible(true); //显示会话窗体 
@@ -221,10 +228,18 @@ public class ListUI extends javax.swing.JFrame {
 
     private void FriendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FriendListMouseClicked
         // TODO add your handling code here:
-
-        System.out.println(FriendList.getSelectedValue());
-
+       
+        
     }//GEN-LAST:event_FriendListMouseClicked
+
+    private void FriendListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FriendListMousePressed
+        // TODO add your handling code here:
+        System.out.println(FriendList.getSelectedValue());
+        FriendList.getSelectedValuesList();
+        ChatpageUI chatpage=new ChatpageUI(FriendList.getSelectedValue(),clientSocket); //创建客户机界面
+        chatpage.setTitle(msg.getUserId()); //设置标题
+        chatpage.setVisible(true); //显示会话窗体
+    }//GEN-LAST:event_FriendListMousePressed
 
     /**
      * @param args the command line arguments
@@ -268,6 +283,5 @@ public class ListUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

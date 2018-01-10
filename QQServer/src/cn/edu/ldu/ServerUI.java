@@ -1,5 +1,6 @@
 package cn.edu.ldu;
 
+import java.awt.Toolkit;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import javax.swing.JOptionPane;
@@ -14,6 +15,9 @@ public class ServerUI extends javax.swing.JFrame {
      */
     public ServerUI() {
         initComponents();
+        int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width)/2;
+        int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height)/2;
+        this.setLocation(x, y);
     }
 
     /**
@@ -156,7 +160,10 @@ public class ServerUI extends javax.swing.JFrame {
             /////
            /* Thread ListServer=new ListServer(serverSocket2,this);
             ListServer.start();*/
-            group2Server c=new group2Server();
+            G2Server gServer=new G2Server();
+            
+            ChatServer chatServer=new ChatServer();
+            chatServer.start();
         } catch (NumberFormatException | SocketException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE);
         }

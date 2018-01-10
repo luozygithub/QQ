@@ -3,7 +3,6 @@ package cn.edu.ldu;
 import cn.edu.ldu.util.Message;
 import cn.edu.ldu.util.Translate;
 import cn.edu.ldu.util.User;
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
@@ -39,13 +38,15 @@ public class ReceiveMessage extends Thread {
             serverSocket.receive(packet);//接收客户机数据receive
             //收到的数据转为消息对象
             Message msg=(Message)Translate.ByteToObject(packet.getData());
-            String userId=msg.getUserId();//当前消息来自用户的id            
-            String password=msg.getPassword();//当前消息来自用户的   
-            String encryptPassword=Cryptography.getHash(password, "SHA-256");
-                System.err.println(Cryptography.getHash(password, "SHA-256"));
+            String userId=msg.getUserId();//当前消息来自用户的id      
+
+  
+            String touserString=msg.getTargetUser();
+        
             if (msg.getType().equalsIgnoreCase("M_LOGIN")) { //是M_LOGIN消息 
                 Message backMsg=new Message();
-         
+                String password=msg.getPassword();//当前消息来自用户的 
+                String encryptPassword=Cryptography.getHash(password, "SHA-256");
                 boolean flag=false;
                 boolean onlineflag=false;
                 for (int i=0;i<userList.size();i++) { 
@@ -53,7 +54,7 @@ public class ReceiveMessage extends Thread {
                           onlineflag=true;
                       }
                 }
-                System.out.println(onlineflag);
+         
                 if(onlineflag){
                     //判断用户是否在线
                     backMsg.setType("M_UserOnline");
@@ -138,9 +139,27 @@ public class ReceiveMessage extends Thread {
                     DatagramPacket newPacket=new DatagramPacket(data,data.length,oldPacket.getAddress(),oldPacket.getPort());
                     serverSocket.send(newPacket);
                 }//end for 
+            }else if(msg.getType().equalsIgnoreCase("M_USER")){
+    
+                int portString=0;
+                for (int i=0;i<userList.size();i++) { 
+                      if (touserString.equalsIgnoreCase(userList.get(i).getUserId())){
+                         portString=userList.get(i).getPacket().getPort();
+                      }
+                }
+
+                Message m=new Message();
+                m.setTargetPort(portString);
+                byte[] buffer=Translate.ObjectToByte(m);
+                System.err.println(msg.getToPort());
+                System.err.println(packet.getPort());
+                DatagramPacket newPacket=new DatagramPacket(buffer,buffer.length,packet.getAddress(),msg.getToPort());
+                serverSocket.send(newPacket);
+      
+                
             }//end if
-            } catch (Exception e) { 
-                    System.out.println("ReceiveMessage");
+            } catch (Exception e) {
+                System.out.println("ReceiveMessage");
             }
         }//end while
     }//end run

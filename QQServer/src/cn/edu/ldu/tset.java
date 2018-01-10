@@ -45,9 +45,9 @@ public class tset  extends Thread {
               } catch (IOException ex) {
                   Logger.getLogger(tset.class.getName()).log(Level.SEVERE, null, ex);
               }
-                              System.out.println("cn.edu.ldu.tset.run()");
+                 
                 cn.edu.ldu.util.Message msg=(cn.edu.ldu.util.Message)Translate.ByteToObject(packet.getData());
-                               System.out.println("cn.edu.ldu.tset.run()");
+                      
                 String userId=msg.getUserId();//当前消息来自用户的id            
                 String password=msg.getPassword();//当前消息来自用户的  
                 System.err.println(userId+password);
