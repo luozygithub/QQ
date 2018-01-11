@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import cn.edu.ldu.util.LMessage;
 import java.awt.Toolkit;
 import cn.edu.ldu.game.GameClientUI;
+import cn.edu.ldu.game.Game_Strat;
+import cn.edu.ldu.game.lightning.*;
 /**
  *
  * @author 罗中运
@@ -100,6 +102,8 @@ public class ListUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         FriendList = new javax.swing.JList<>();
         jButton3 = new javax.swing.JButton();
+        jButton2048 = new javax.swing.JButton();
+        jButtonLighting = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 255, 255));
@@ -160,20 +164,35 @@ public class ListUI extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jButton3.setFont(new java.awt.Font("宋体", 0, 36)); // NOI18N
-        jButton3.setText("进入游戏");
+        jButton3.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
+        jButton3.setText("猜拳游戏");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton2048.setFont(new java.awt.Font("方正姚体", 1, 18)); // NOI18N
+        jButton2048.setText("2048");
+        jButton2048.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2048ActionPerformed(evt);
+            }
+        });
+
+        jButtonLighting.setFont(new java.awt.Font("方正姚体", 1, 18)); // NOI18N
+        jButtonLighting.setText("雷霆战机");
+        jButtonLighting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLightingActionPerformed(evt);
             }
         });
 
@@ -184,8 +203,11 @@ public class ListUI extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                    .addComponent(jButton2048, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonLighting, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -193,10 +215,14 @@ public class ListUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
-                .addGap(6, 6, 6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2048)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonLighting)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,6 +287,16 @@ public class ListUI extends javax.swing.JFrame {
         gamepage.setVisible(true); //显示会话窗体
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton2048ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2048ActionPerformed
+        // TODO add your handling code here:
+        Game_Strat.start();
+    }//GEN-LAST:event_jButton2048ActionPerformed
+
+    private void jButtonLightingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLightingActionPerformed
+        // TODO add your handling code here:
+        Game.start();
+    }//GEN-LAST:event_jButtonLightingActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -300,7 +336,9 @@ public class ListUI extends javax.swing.JFrame {
     public javax.swing.JList<String> FriendList;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton2048;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonLighting;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
