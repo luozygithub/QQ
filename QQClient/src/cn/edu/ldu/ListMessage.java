@@ -27,39 +27,46 @@ public class ListMessage extends Thread{
     @Override
     public void run() {
         while (true) { //无限循环，处理收到的各类消息
-                parentUI.FriendList.setModel(listModel);
+              
           try {
+ 
+                DatagramPacket packet=new DatagramPacket(data,data.length); //构建接收报文
+                ListSocket.receive(packet); //接收
+                 System.out.println("list1");
+                LMessage lmsg=(LMessage)Translate.ByteToObject(data);//还原消息对象
+                     System.out.println("list2");
+                String userId=lmsg.getUserId(); //当前用户id
+                //根据消息类型分类处理
+                System.out.println("list3");
+                if (lmsg.getType().equalsIgnoreCase("M_LOGIN")) { //是其他用户的登录消息
+                    playSound("/cn/edu/ldu/sound/fadeIn.wav");//上线提示音  
+                    //更新消息窗口
 
-            DatagramPacket packet=new DatagramPacket(data,data.length); //构建接收报文
-            ListSocket.receive(packet); //接收
-  
-            LMessage lmsg=(LMessage)Translate.ByteToObject(data);//还原消息对象
-            String userId=lmsg.getUserId(); //当前用户id
-            //根据消息类型分类处理
-            System.out.println("kehuduan");
-            if (lmsg.getType().equalsIgnoreCase("M_LOGIN")) { //是其他用户的登录消息
-                playSound("/cn/edu/ldu/sound/fadeIn.wav");//上线提示音  
-                //更新消息窗口
-         
-                //新上线用户加入列表
-                listModel.add(listModel.getSize(), userId);
-                parentUI.FriendList.setModel(listModel);
-                      System.out.println("M_LOGIN");
-            }else if (lmsg.getType().equalsIgnoreCase("M_ACK")) { //是服务器确认消息
-                //登录成功，将加入用户列表
-                listModel.add(listModel.getSize(), userId);
-                parentUI.FriendList.setModel(listModel);
-                 System.out.println("M_ACK");
-            }else if (lmsg.getType().equalsIgnoreCase("M_QUIT")) { //是其他用户下线消息
-                playSound("/cn/edu/ldu/sound/leave.wav");//消息提示音  
-                //更新消息窗口
-                listModel.remove(listModel.indexOf(userId));
-                parentUI.FriendList.setModel(listModel);
-                      System.out.println("M_QUIT");
-            }//end if
-          }catch (Exception ex) {
-              System.out.println("ListMessage");
-          }//end try
+                    //新上线用户加入列表
+                    listModel.add(listModel.getSize(), userId);
+                    parentUI.FriendList.setModel(listModel);
+                    System.out.println("M_LOGIN");
+                }else if (lmsg.getType().equalsIgnoreCase("M_ACK")) { //是服务器确认消息
+                    //登录成功，将加入用户列表
+                    listModel.add(listModel.getSize(), userId);
+                    parentUI.FriendList.setModel(listModel);
+                    System.out.println("M_ACK");
+                }else if (lmsg.getType().equalsIgnoreCase("M_QUIT")) { //是其他用户下线消息
+                    playSound("/cn/edu/ldu/sound/leave.wav");//消息提示音  
+                    //更新消息窗口
+                    listModel.remove(listModel.indexOf(userId));
+                    parentUI.FriendList.setModel(listModel);
+                          System.out.println("M_QUIT");
+                }else if(lmsg.getType().equalsIgnoreCase("siliao")){
+                    System.out.println("daolesiliaole");
+                    ChatpageUI chatpageUI=new ChatpageUI(lmsg.getUserId(),ListSocket); //创建客户机界面
+                    chatpageUI.setTitle(lmsg.getUserId()); //设置标题
+                    chatpageUI.setVisible(true);
+                }
+                    System.out.println("lmsg.getText()"+lmsg.getText());
+              }catch (Exception ex) {
+                  System.out.println("ListMessage");
+              }//end try
         } //end while
     }//end run
     /**

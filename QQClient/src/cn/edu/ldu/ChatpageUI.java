@@ -36,6 +36,7 @@ public class ChatpageUI extends javax.swing.JFrame {
        this();
         touserString=touser;
        this.psocket=psocket;
+        System.out.println(psocket);
     }
 
     /**
@@ -89,7 +90,8 @@ public class ChatpageUI extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
         );
@@ -155,35 +157,21 @@ public class ChatpageUI extends javax.swing.JFrame {
         try {
 
             //向服务器要对方端口
-            cn.edu.ldu.util.Message msg=new cn.edu.ldu.util.Message();
-            msg.setText(this.jTextAreaPriSendPanel.getText());
+            cn.edu.ldu.util.LMessage lmsg=new cn.edu.ldu.util.LMessage();
+            lmsg.setText(this.jTextAreaPriSendPanel.getText());
             //登录消息类型
             String remoteName="127.0.0.1";
             InetAddress remoteAddr=InetAddress.getByName(remoteName);
-            msg.setType("M_USER");
+            lmsg.setType("M_USER");
        
-            msg.setToPort(psocket.getLocalPort());
-            msg.setTargetUser(touserString);
-            byte[] data=Translate.ObjectToByte(msg); //消息对象序列化
+            lmsg.setToPort(psocket.getLocalPort());
+            lmsg.setTargetUser(touserString);
+            byte[] data=Translate.ObjectToByte(lmsg); //消息对象序列化
             //定义登录报文
-            DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,20000);
+            DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,60000);
             System.out.println();
             psocket.send(packet);
-       /*   
-            while (true) {                
-                psocket.receive(packet);
-          
-           
-                msg=(cn.edu.ldu.util.Message)Translate.ByteToObject(packet.getData());
-                int port=msg.getTargetPort();
-                System.out.println();
-                msg.setType("siliao");
-                msg.setText("nihao");
-                packet=new DatagramPacket(data,data.length,remoteAddr,port);
-                psocket.send(packet);
-                 break;
-            }
-         */
+     
        
             } catch (SocketException ex) {
             Logger.getLogger(tset.class.getName()).log(Level.SEVERE, null, ex);

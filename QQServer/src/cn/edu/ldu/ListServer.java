@@ -23,17 +23,17 @@ public class ListServer extends Thread {
     public void run() {  
         while (true) { //循环处理收到的各种消息
            try{
-                System.out.println("nihaoa");
+
                 packet=new DatagramPacket(data,data.length);//构建接收报文
                 serverSocket.receive(packet);//接收客户机数据
             //收到的数据转为消息对象
-                System.out.println("nihaoa");
-                LMessage msg=(LMessage)Translate.ByteToObject(packet.getData());
-                String userId=msg.getUserId();//当前消息来自用户的id            
-     
-            if (msg.getType().equalsIgnoreCase("M_LOGIN")) { //是M_LOGIN消息 
-                    LMessage backMsg=new LMessage();
 
+                LMessage lmsg=(LMessage)Translate.ByteToObject(packet.getData());
+                String userId=lmsg.getUserId();//当前消息来自用户的id            
+
+            if (lmsg.getType().equalsIgnoreCase("M_LOGIN")) { //是M_LOGIN消息 
+                    LMessage backMsg=new LMessage();
+                 
                     byte[] buf=Translate.ObjectToByte(backMsg);
                     DatagramPacket backPacket=new DatagramPacket(buf,buf.length,packet.getAddress(),packet.getPort());//向登录用户发送的报文
                     serverSocket.send(backPacket); //发送   
@@ -61,7 +61,7 @@ public class ListServer extends Thread {
                         serverSocket.send(newPacket);
                     }//end for                  
                 //end if                           
-            }else if (msg.getType().equalsIgnoreCase("M_QUIT")) { //是M_QUIT消息
+            }else if (lmsg.getType().equalsIgnoreCase("M_QUIT")) { //是M_QUIT消息
                 //更新显示
 
                 for(int i=0;i<userList.size();i++) {
@@ -76,6 +76,28 @@ public class ListServer extends Thread {
                     DatagramPacket newPacket=new DatagramPacket(data,data.length,oldPacket.getAddress(),oldPacket.getPort());
                     serverSocket.send(newPacket);
                 }//end for 
+            }else if(lmsg.getType().equalsIgnoreCase("M_USER")){
+                   System.out.println("M_USER");
+                 System.out.println("5");
+                int portString=0;
+                 String touserString=lmsg.getTargetUser();
+                for (int i=0;i<userList.size();i++) { 
+                       System.out.println(userList.get(i).getUserId()+"port"+userList.get(i).getPacket().getPort());
+                      if (touserString.equals(userList.get(i).getUserId())){
+                         portString=userList.get(i).getPacket().getPort();
+                      }
+                }
+                System.out.println("6");
+     
+                System.out.println("myport"+lmsg.getToPort()+"...");
+                System.out.println("portString:"+portString);
+                lmsg.setType("siliao");
+                lmsg.setText("nihao");
+                byte[] buffer=Translate.ObjectToByte(lmsg);
+                DatagramPacket newPacket=new DatagramPacket(buffer,buffer.length,packet.getAddress(),portString);
+                serverSocket.send(newPacket);
+                System.out.println("7");
+                
             }//end if
             } catch (Exception e) { 
                 System.out.println("ListSERVER");

@@ -2,6 +2,7 @@
 package cn.edu.ldu.util;
 
 
+import cn.edu.ldu.Cryptography;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -39,7 +40,7 @@ public class Dbutil {
 			
 	}
         public void Register(User user){
-             try{
+            try{
                 Dbutil dbutil = new Dbutil();
 		String sql = "insert into user values('"+user.getId()+"','"+user.getPassword()+"','"+user.getTel()+"','"+user.getNickname()+"')";
 		Connection connection = dbutil.getCon();
@@ -48,6 +49,33 @@ public class Dbutil {
              }catch(Exception e){
                   JOptionPane.showMessageDialog(null, "用户已被注册", "错误提示", JOptionPane.ERROR_MESSAGE);
              }
+        }
+        public void ChangePw(User user){
+           
+               
+                String passwordString="";
+                try {
+
+                    Dbutil dbutil = new Dbutil();
+                    String userId=user.getId();//当前消息来自用户的id            
+                    String Tel=user.getTel();//当前消息来自用户的mima         
+
+                    String sql = "select * from user where id='" + userId + "'";
+                    Connection connection = dbutil.getCon();
+                    java.sql.Statement statement = (java.sql.Statement) connection.createStatement();
+                    ResultSet rs = statement.executeQuery(sql);
+
+                    if (rs.next()){
+                          String encryptPassword=Cryptography.getHash(user.getPassword(), "SHA-256");
+                         
+                          String sql2 ="UPDATE user SET password='"+encryptPassword+"' WHERE id='"+user.getId()+"'";
+                          statement.executeUpdate(sql2);
+                    }
+                }catch(Exception e){
+                     JOptionPane.showMessageDialog(null, "更新密码失败", "错误提示", JOptionPane.ERROR_MESSAGE);
+                }
+             
+            
         }
 	
 	@SuppressWarnings("unused")

@@ -17,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import cn.edu.ldu.util.LMessage;
 import java.awt.Toolkit;
+import cn.edu.ldu.game.GameClientUI;
 /**
  *
  * @author 罗中运
@@ -29,7 +30,7 @@ public class ListUI extends javax.swing.JFrame {
     Message msg=new Message();
     LMessage listmsg=new LMessage();
     DatagramSocket clientSocket;
-  DatagramSocket ChatSocket;
+
     private byte[] data=new byte[8096]; //8K字节数组
     /**
      * Creates new form ListUI
@@ -40,13 +41,8 @@ public class ListUI extends javax.swing.JFrame {
 
         try {
             
-            try {
-                this.clientSocket = new DatagramSocket();
-                
-            } catch (SocketException ex) {
-                Logger.getLogger(ListUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.ChatSocket=ChatSocket;
+         
+            this.LSocket=ChatSocket;
             this.clientSocket=clientSocket;
             this.msg=msg;
             //tianjianlist 
@@ -62,13 +58,12 @@ public class ListUI extends javax.swing.JFrame {
             //定义登录报文
             DatagramPacket listpacket=new DatagramPacket(data,data.length,remoteAddr,remotePort);
             //发送登录报文
-            LSocket.send(listpacket);
+            LSocket.send(listpacket);//列表上线系统
             ListMessage listThread;
             listThread = new ListMessage(LSocket,this);
             listThread.start();//启动消息线程
             
-            ChatMessage chatMessage=new ChatMessage(ChatSocket);
-            chatMessage.start();
+           
         } catch (UnknownHostException ex) {
             Logger.getLogger(ListUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -104,6 +99,7 @@ public class ListUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         FriendList = new javax.swing.JList<>();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 255, 255));
@@ -115,14 +111,16 @@ public class ListUI extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/bankground .jpg"))); // NOI18N
 
-        jButton1.setText("群1");
+        jButton1.setFont(new java.awt.Font("方正舒体", 1, 18)); // NOI18N
+        jButton1.setText("聊天大厅一");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("群2");
+        jButton2.setFont(new java.awt.Font("方正舒体", 1, 18)); // NOI18N
+        jButton2.setText("聊天大厅二");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -167,9 +165,17 @@ public class ListUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
+
+        jButton3.setFont(new java.awt.Font("宋体", 0, 36)); // NOI18N
+        jButton3.setText("进入游戏");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,22 +183,27 @@ public class ListUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(6, 6, 6))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-            
+     
             ClientUI client=new ClientUI(clientSocket,msg); //创建客户机界面
             client.setTitle(msg.getUserId()); //设置标题
             client.setVisible(true); //显示会话窗体 
@@ -234,12 +245,18 @@ public class ListUI extends javax.swing.JFrame {
 
     private void FriendListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FriendListMousePressed
         // TODO add your handling code here:
-        System.out.println(FriendList.getSelectedValue());
+        System.out.println(clientSocket.getLocalPort());System.out.println(LSocket.getLocalPort());
         FriendList.getSelectedValuesList();
-        ChatpageUI chatpage=new ChatpageUI(FriendList.getSelectedValue(),clientSocket); //创建客户机界面
+        ChatpageUI chatpage=new ChatpageUI(FriendList.getSelectedValue(),LSocket); //创建客户机界面
         chatpage.setTitle(msg.getUserId()); //设置标题
         chatpage.setVisible(true); //显示会话窗体
     }//GEN-LAST:event_FriendListMousePressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        GameClientUI gamepage=new GameClientUI(); //创建客户机界面s
+        gamepage.setVisible(true); //显示会话窗体
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,6 +297,7 @@ public class ListUI extends javax.swing.JFrame {
     public javax.swing.JList<String> FriendList;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;

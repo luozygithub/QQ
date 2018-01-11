@@ -26,6 +26,9 @@ public class LoginUI extends javax.swing.JDialog {
         int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width)/2;
         int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height)/2;
         this.setLocation(x, y);        
+        
+        this.setSize(this.getSize().width,this.getSize().height-75);
+        jLabel5.hide();jLabel6.hide();
     }
 
     /**
@@ -37,18 +40,24 @@ public class LoginUI extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblLogo = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         txtUserId = new javax.swing.JTextField();
         btnRegister = new javax.swing.JButton();
         btnGetPassword = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
-        chkRemember = new javax.swing.JCheckBox();
-        chkAutoLogin = new javax.swing.JCheckBox();
         btnLogin = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtRemoteName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtRemotePort = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/xiala.png"))); // NOI18N
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/xiala_1.png"))); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("登录界面");
@@ -60,8 +69,11 @@ public class LoginUI extends javax.swing.JDialog {
                 formWindowClosing(evt);
             }
         });
-
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/Login.png"))); // NOI18N
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         txtUserId.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
 
@@ -75,7 +87,7 @@ public class LoginUI extends javax.swing.JDialog {
         });
 
         btnGetPassword.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
-        btnGetPassword.setText("找回密码");
+        btnGetPassword.setText("忘记密码");
         btnGetPassword.setBorderPainted(false);
         btnGetPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGetPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -85,17 +97,11 @@ public class LoginUI extends javax.swing.JDialog {
         });
 
         txtPassword.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
-
-        chkRemember.setText("记住密码");
-        chkRemember.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        chkRemember.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkRememberActionPerformed(evt);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
             }
         });
-
-        chkAutoLogin.setText("自动登录");
-        chkAutoLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnLogin.setBackground(new java.awt.Color(153, 153, 255));
         btnLogin.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
@@ -115,6 +121,17 @@ public class LoginUI extends javax.swing.JDialog {
 
         txtRemotePort.setText("50000");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/xiala.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/loginBack.png"))); // NOI18N
+
+        jLabel7.setText("高级设置");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,24 +139,6 @@ public class LoginUI extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtUserId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                                    .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(chkRemember, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                                .addGap(13, 13, 13)
-                                .addComponent(chkAutoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                            .addComponent(btnGetPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -147,32 +146,56 @@ public class LoginUI extends javax.swing.JDialog {
                         .addGap(38, 38, 38)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtRemotePort)))
-                .addContainerGap())
+                        .addComponent(txtRemotePort))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                    .addComponent(txtUserId))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                                    .addComponent(btnGetPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(49, 49, 49))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(77, 77, 77)
+                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel7)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtUserId)
+                    .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtPassword))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGetPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRegister))
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGetPassword))
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(chkRemember)
-                            .addComponent(chkAutoLogin)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(lblLogo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLogin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnLogin))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtRemoteName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,7 +240,8 @@ public class LoginUI extends javax.swing.JDialog {
         DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,remotePort);
         //发送登录报文
         clientSocket.send(packet);
-        
+        //
+        /*
         Message msg2=new Message();
         msg2.setUserId(id);//登录名       
         msg2.setType("M_LOGIN"); //登录消息类型
@@ -227,7 +251,7 @@ public class LoginUI extends javax.swing.JDialog {
         DatagramSocket ChatSocket=new DatagramSocket();
         msg2.setToPort(ChatSocket.getLocalPort()); //目标端口   
         DatagramPacket packet2=new DatagramPacket(data2,data2.length,remoteAddr,20000);
-        ChatSocket.send(packet2);      
+        ChatSocket.send(packet2);*/      
         
         /*DatagramPacket packet2=new DatagramPacket(data,data.length,remoteAddr,60000);
         clientSocket.send(packet2);*/
@@ -237,10 +261,12 @@ public class LoginUI extends javax.swing.JDialog {
         clientSocket.setSoTimeout(0);//取消超时时间
         Message backMsg=(Message)Translate.ByteToObject(data);
         //处理登录结果
-
+        
+        DatagramSocket LSocket=new DatagramSocket();
+        System.err.println(LSocket.getLocalPort());
         if (backMsg.getType().equalsIgnoreCase("M_SUCCESS")) { //登录成功
             this.dispose(); //关闭登录对话框
-            ListUI listUI=new ListUI(clientSocket,ChatSocket,msg);
+            ListUI listUI=new ListUI(clientSocket,LSocket,msg);
             listUI.setVisible(true);
          /* ClientUI client=new ClientUI(clientSocket,msg); //创建客户机界面
             client.setTitle(msg.getUserId()); //设置标题
@@ -264,11 +290,6 @@ public class LoginUI extends javax.swing.JDialog {
         re.setVisible(true);
     }//GEN-LAST:event_btnRegisterActionPerformed
 
-    private void chkRememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkRememberActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_chkRememberActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
          System.exit(0);
@@ -280,6 +301,104 @@ public class LoginUI extends javax.swing.JDialog {
         GetPasswordUI re=new GetPasswordUI (); //创建客户机界面
         re.setVisible(true);
     }//GEN-LAST:event_btnGetPasswordActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formKeyPressed
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+             try {
+
+                    String id=txtUserId.getText();
+                    String password=String.valueOf(txtPassword.getPassword());       
+                    if (id.equals("") || password.equals("")) {
+                        JOptionPane.showMessageDialog(null, "帐号或密码不能为空！", "错误提示", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    //获取服务器地址和端口
+
+                    String remoteName=txtRemoteName.getText();
+                    InetAddress remoteAddr=InetAddress.getByName(remoteName);
+                    int remotePort=Integer.parseInt(txtRemotePort.getText());   
+                    //创建UDP套接字
+                    DatagramSocket clientSocket=new DatagramSocket();
+
+                    clientSocket.setSoTimeout(3000);//设置超时时间
+                    //构建用户登录消息
+                    Message msg=new Message();
+                    msg.setUserId(id);//登录名       
+                    msg.setPassword(password); //密码       
+                    msg.setType("M_LOGIN"); //登录消息类型
+                    msg.setToAddr(remoteAddr); //目标地址
+                    msg.setToPort(remotePort); //目标端口        
+                    byte[] data=Translate.ObjectToByte(msg); //消息对象序列化
+                    //定义登录报文
+                    DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,remotePort);
+                    //发送登录报文
+                    clientSocket.send(packet);
+                    //
+                    /*
+                    Message msg2=new Message();
+                    msg2.setUserId(id);//登录名       
+                    msg2.setType("M_LOGIN"); //登录消息类型
+                    msg.setToAddr(remoteAddr); //目标地址
+
+                    byte[] data2=Translate.ObjectToByte(msg2); 
+                    DatagramSocket ChatSocket=new DatagramSocket();
+                    msg2.setToPort(ChatSocket.getLocalPort()); //目标端口   
+                    DatagramPacket packet2=new DatagramPacket(data2,data2.length,remoteAddr,20000);
+                    ChatSocket.send(packet2);*/      
+
+                    /*DatagramPacket packet2=new DatagramPacket(data,data.length,remoteAddr,60000);
+                    clientSocket.send(packet2);*/
+                    //接收服务器回送的报文
+                    DatagramPacket backPacket=new DatagramPacket(data,data.length);
+                    clientSocket.receive(backPacket); 
+                    clientSocket.setSoTimeout(0);//取消超时时间
+                    Message backMsg=(Message)Translate.ByteToObject(data);
+                    //处理登录结果
+
+                    DatagramSocket LSocket=new DatagramSocket();
+                    System.err.println("LSocket"+LSocket.getLocalPort());
+                    if (backMsg.getType().equalsIgnoreCase("M_SUCCESS")) { //登录成功
+                        this.dispose(); //关闭登录对话框
+                        ListUI listUI=new ListUI(clientSocket,LSocket,msg);
+                        listUI.setVisible(true);
+                     /* ClientUI client=new ClientUI(clientSocket,msg); //创建客户机界面
+                        client.setTitle(msg.getUserId()); //设置标题
+                        client.setVisible(true); //显示会话窗体     
+                     */
+                    }else if(backMsg.getType().equalsIgnoreCase("M_UserOnline")){ //登录失败
+                         JOptionPane.showMessageDialog(null, "用户已存在\n", "登录失败",JOptionPane.ERROR_MESSAGE);  
+
+                    }else{
+                         JOptionPane.showMessageDialog(null, "用户ID或密码错误！\n\n登录失败！\n", "登录失败",JOptionPane.ERROR_MESSAGE);     
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "登录错误", JOptionPane.ERROR_MESSAGE);
+                }//end try     
+            
+        }
+        
+    }//GEN-LAST:event_txtPasswordKeyPressed
+    int flag=0;
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        
+        if(flag==0){
+            this.setSize(this.getSize().width,this.getSize().height+75);
+            flag=1;
+            jLabel1.setIcon(jLabel5.getIcon());
+        }else if(flag==1){
+            this.setSize(this.getSize().width,this.getSize().height-75);
+            flag=0;
+             jLabel1.setIcon(jLabel6.getIcon());
+        }
+        
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -330,11 +449,13 @@ public class LoginUI extends javax.swing.JDialog {
     private javax.swing.JButton btnGetPassword;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegister;
-    private javax.swing.JCheckBox chkAutoLogin;
-    private javax.swing.JCheckBox chkRemember;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtRemoteName;
     private javax.swing.JTextField txtRemotePort;

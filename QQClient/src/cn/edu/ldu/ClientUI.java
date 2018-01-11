@@ -33,16 +33,10 @@ public class ClientUI extends javax.swing.JFrame {
         int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width)/2;
         int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height)/2;
         this.setLocation(x, y);
-        playMusic("/cn/edu/ldu/sound/K.wav");  
+
         
     }
-    private void playMusic(String filename) {
-        URL url = AudioClip.class.getResource(filename);
-        AudioClip sound;
-        sound = Applet.newAudioClip(url);
-        sound.play();
-        System.out.println("cn.edu.ldu.ClientUI.playMusic()");
-    }
+   
     /**
      * 构造函数
      * @param socket 客户机会话套接字

@@ -4,7 +4,7 @@ import java.awt.Toolkit;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import javax.swing.JOptionPane;
-
+import cn.edu.ldu.game.Server;
 /**
  * ServerUI，服务器界面类
  * @author 董相志，版权所有2016--2018，upsunny2008@163.com
@@ -40,7 +40,7 @@ public class ServerUI extends javax.swing.JFrame {
         txtArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("聊天室服务器--董相志设计，upsunny2008@163.com");
+        setTitle("服务器");
 
         topPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "启动服务器", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("宋体", 1, 14))); // NOI18N
 
@@ -162,8 +162,11 @@ public class ServerUI extends javax.swing.JFrame {
             ListServer.start();*/
             G2Server gServer=new G2Server();
             
-            ChatServer chatServer=new ChatServer();
-            chatServer.start();
+           
+            
+            Server GameServer=new Server(); //创建客户机界面
+
+     
         } catch (NumberFormatException | SocketException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE);
         }

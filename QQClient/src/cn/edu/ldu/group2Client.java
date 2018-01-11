@@ -48,7 +48,21 @@ public class group2Client {
 	JPanel jp_list = new JPanel();
 	String[] str = {"在线","隐身"};
 	JComboBox jcb = new JComboBox(str);
-	
+	private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {
+            if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+                cm = new Message(jf.getTitle(),jtaoutput.getText());				
+				
+				try {
+					
+					oos.writeObject(cm);					
+				} catch (IOException e) {
+					// TODO 自动生成 catch 块
+					e.printStackTrace();
+				}
+				
+				jtaoutput.setText("");
+            }
+        }
 	public group2Client(String clientname){
 			
 
@@ -79,7 +93,13 @@ public class group2Client {
 				jb_self.setEnabled(true);				
 			}
 		});
-		
+		jtaoutput.addKeyListener(new java.awt.event.KeyAdapter() {
+                         public void keyPressed(java.awt.event.KeyEvent evt) {
+                            txtPasswordKeyPressed(evt);
+                     }
+                  });
+                
+        
 		//send按钮（给服务器发信息）
 		jb.addActionListener(new ActionListener(){
 			

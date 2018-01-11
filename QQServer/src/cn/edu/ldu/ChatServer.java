@@ -7,8 +7,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.*;
-import cn.edu.ldu.util.Dbutil;
+
 import java.net.SocketException;
 
 public class ChatServer extends Thread {

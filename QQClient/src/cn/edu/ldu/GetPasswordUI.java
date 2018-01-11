@@ -7,7 +7,7 @@ package cn.edu.ldu;
 import cn.edu.ldu.method.GetPassword;
 import cn.edu.ldu.cls.User;
 import java.awt.Toolkit;
-import javafx.scene.control.Alert;
+import cn.edu.ldu.util.Dbutil;
 import javax.swing.JOptionPane;
 /**
  *
@@ -45,6 +45,8 @@ public class GetPasswordUI extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -88,6 +90,9 @@ public class GetPasswordUI extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/Register.jpg"))); // NOI18N
 
+        jLabel5.setFont(new java.awt.Font("微软雅黑", 1, 18)); // NOI18N
+        jLabel5.setText("新密码：");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,19 +104,21 @@ public class GetPasswordUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldGetpasswordID, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldGetpasswordTel, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(108, 108, 108)
                         .addComponent(jButtonGetpasswordSubmit)
                         .addGap(68, 68, 68)
-                        .addComponent(jButtonGetpasswordResetting)))
+                        .addComponent(jButtonGetpasswordResetting))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldGetpasswordID, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldGetpasswordTel, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                            .addComponent(jTextField1))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
@@ -132,6 +139,13 @@ public class GetPasswordUI extends javax.swing.JFrame {
                     .addComponent(jTextFieldGetpasswordTel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(11, 11, 11))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGetpasswordSubmit)
                     .addComponent(jButtonGetpasswordResetting))
@@ -153,10 +167,12 @@ public class GetPasswordUI extends javax.swing.JFrame {
         User user=new User();
         user.setId(jTextFieldGetpasswordID.getText());
         user.setTel(jTextFieldGetpasswordTel.getText());
+        user.setPassword(jTextField1.getText());
         GetPassword getPassword=new GetPassword();
         String passwordmsg=getPassword.GetPassword(user);
- 
-        JOptionPane.showMessageDialog(rootPane, passwordmsg);
+        Dbutil dbutil=new Dbutil();
+        dbutil.ChangePw(user);
+        JOptionPane.showMessageDialog(rootPane, "更新密码成功");
     }//GEN-LAST:event_jButtonGetpasswordSubmitActionPerformed
 
     /**
@@ -202,7 +218,9 @@ public class GetPasswordUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldGetpasswordID;
     private javax.swing.JTextField jTextFieldGetpasswordTel;
     // End of variables declaration//GEN-END:variables

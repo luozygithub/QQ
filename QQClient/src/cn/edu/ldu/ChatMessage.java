@@ -25,7 +25,7 @@ public class ChatMessage extends Thread{
         boolean flag=false;
         while (true) { //无限循环，处理收到的各类消息
           try {
-                  System.out.println("1");
+            System.out.println("1");
             DatagramPacket packet=new DatagramPacket(data,data.length); //构建接收报文
             clientSocket.receive(packet); //接收  
             Message msg=(Message)Translate.ByteToObject(data);//还原消息对象
