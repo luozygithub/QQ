@@ -92,13 +92,36 @@ public class ListServer extends Thread {
                 System.out.println("myport"+lmsg.getToPort()+"...");
                 System.out.println("portString:"+portString);
                 lmsg.setType("siliao");
-                lmsg.setText("nihao");
+                lmsg.setText("say:"+lmsg.getText());
+                lmsg.setTargetId(userId);
                 byte[] buffer=Translate.ObjectToByte(lmsg);
                 DatagramPacket newPacket=new DatagramPacket(buffer,buffer.length,packet.getAddress(),portString);
                 serverSocket.send(newPacket);
                 System.out.println("7");
                 
-            }//end if
+            }else if(lmsg.getType().equalsIgnoreCase("xiaoxi")){
+                    System.out.println("xiaoxi");
+                 System.out.println("8");
+                int portString=0;
+                 String touserString=lmsg.getTargetUser();
+                for (int i=0;i<userList.size();i++) { 
+                       System.out.println(userList.get(i).getUserId()+"port"+userList.get(i).getPacket().getPort());
+                      if (touserString.equals(userList.get(i).getUserId())){
+                         portString=userList.get(i).getPacket().getPort();
+                      }
+                }
+                System.out.println("9");
+     
+      
+                lmsg.setType("xiaoxi");
+                System.out.println(lmsg.getText());
+                lmsg.setTargetId(userId);
+                lmsg.setText("say:"+lmsg.getText());//把消息加上谁说的
+                byte[] buffer=Translate.ObjectToByte(lmsg);
+                DatagramPacket newPacket=new DatagramPacket(buffer,buffer.length,packet.getAddress(),portString);
+                serverSocket.send(newPacket);
+                System.out.println("10");
+            }
             } catch (Exception e) { 
                 System.out.println("ListSERVER");
             }

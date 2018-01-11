@@ -30,7 +30,7 @@ public class ListUI extends javax.swing.JFrame {
     Message msg=new Message();
     LMessage listmsg=new LMessage();
     DatagramSocket clientSocket;
-
+    String mynameString=null;
     private byte[] data=new byte[8096]; //8K字节数组
     /**
      * Creates new form ListUI
@@ -48,8 +48,8 @@ public class ListUI extends javax.swing.JFrame {
             //tianjianlist 
             remoteName="127.0.0.1";
             remoteAddr=InetAddress.getByName(remoteName);
-           
-          
+           mynameString=msg.getUserId();
+           this.setTitle(msg.getUserId());
             listmsg.setUserId(msg.getUserId());
             listmsg.setType("M_LOGIN"); //登录消息类型
             listmsg.setToAddr(remoteAddr); //目标地址
@@ -239,17 +239,20 @@ public class ListUI extends javax.swing.JFrame {
 
     private void FriendListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FriendListMouseClicked
         // TODO add your handling code here:
-       
+        if(evt.getClickCount()==2){
+                System.out.println(clientSocket.getLocalPort());System.out.println(LSocket.getLocalPort());
+                FriendList.getSelectedValuesList();
+                ChatpageUI chatpage=new ChatpageUI(mynameString,FriendList.getSelectedValue(),LSocket); //创建客户机界面
+                chatpage.setTitle( FriendList.getSelectedValue()); //设置标题
+                chatpage.setVisible(true); //显示会话窗体
+        }
         
     }//GEN-LAST:event_FriendListMouseClicked
 
     private void FriendListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FriendListMousePressed
         // TODO add your handling code here:
-        System.out.println(clientSocket.getLocalPort());System.out.println(LSocket.getLocalPort());
-        FriendList.getSelectedValuesList();
-        ChatpageUI chatpage=new ChatpageUI(FriendList.getSelectedValue(),LSocket); //创建客户机界面
-        chatpage.setTitle(msg.getUserId()); //设置标题
-        chatpage.setVisible(true); //显示会话窗体
+  
+        
     }//GEN-LAST:event_FriendListMousePressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

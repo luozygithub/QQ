@@ -19,24 +19,27 @@ import java.util.logging.Logger;
  * @author 罗中运
  */
 public class ChatpageUI extends javax.swing.JFrame {
-    String touserString;
+    String whochat;
     int mport;
       DatagramSocket psocket;
+      String myname;
     /**
      * Creates new form Chatpage
      */
      public ChatpageUI(){
-           initComponents();
+        initComponents();
         int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width)/2;
         int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height)/2;
         this.setLocation(x, y);  
      }
      
-    public ChatpageUI(String touser,DatagramSocket psocket) {
+    public ChatpageUI(String myname,String touser,DatagramSocket psocket) {
        this();
-        touserString=touser;
+        whochat=touser;//对方id
+        this.myname=myname;
        this.psocket=psocket;
         System.out.println(psocket);
+        this.setTitle(touser);
     }
 
     /**
@@ -150,33 +153,64 @@ public class ChatpageUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+        boolean flag=true;
     private void jButtonPriSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPriSendActionPerformed
         // TODO add your handling code here:
-       
-        try {
+        if(flag){
+            try {
 
-            //向服务器要对方端口
-            cn.edu.ldu.util.LMessage lmsg=new cn.edu.ldu.util.LMessage();
-            lmsg.setText(this.jTextAreaPriSendPanel.getText());
-            //登录消息类型
-            String remoteName="127.0.0.1";
-            InetAddress remoteAddr=InetAddress.getByName(remoteName);
-            lmsg.setType("M_USER");
-       
-            lmsg.setToPort(psocket.getLocalPort());
-            lmsg.setTargetUser(touserString);
-            byte[] data=Translate.ObjectToByte(lmsg); //消息对象序列化
-            //定义登录报文
-            DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,60000);
-            System.out.println();
-            psocket.send(packet);
-     
-       
-            } catch (SocketException ex) {
-            Logger.getLogger(tset.class.getName()).log(Level.SEVERE, null, ex);
-        }catch(Exception e){
+
+                //向服务器要对方端口
+                cn.edu.ldu.util.LMessage lmsg=new cn.edu.ldu.util.LMessage();
+                lmsg.setText(this.jTextAreaPriSendPanel.getText());
+                //登录消息类型
+                String remoteName="127.0.0.1";
+                InetAddress remoteAddr=InetAddress.getByName(remoteName);
+                lmsg.setType("M_USER");
+                lmsg.setTargetId(whochat);//告诉服务器要找谁
+                lmsg.setText(this.jTextAreaPriSendPanel.getText());
+                lmsg.setToPort(psocket.getLocalPort());
+                lmsg.setTargetUser(myname);//告诉对方我是谁
+                byte[] data=Translate.ObjectToByte(lmsg); //消息对象序列化
+                //定义登录报文
+                DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,60000);
+                System.out.println();
+                psocket.send(packet);
+
+
+                } catch (SocketException ex) {
+                Logger.getLogger(tset.class.getName()).log(Level.SEVERE, null, ex);
+            }catch(Exception e){
+            }
+            flag=false;
+        }else{
+             try {
+               
+               cn.edu.ldu.util.LMessage lmsg=new cn.edu.ldu.util.LMessage();
+                lmsg.setText(this.jTextAreaPriSendPanel.getText());
+                //登录消息类型
+                String remoteName="127.0.0.1";
+                InetAddress remoteAddr=InetAddress.getByName(remoteName);
+                lmsg.setType("xiaoxi");
+                lmsg.setTargetId(whochat);//告诉服务器要找谁
+                lmsg.setText(this.jTextAreaPriSendPanel.getText());
+                lmsg.setToPort(psocket.getLocalPort());
+                lmsg.setTargetUser(myname);//告诉对方我是谁
+                byte[] data=Translate.ObjectToByte(lmsg); //消息对象序列化
+                //定义登录报文
+                DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,60000);
+                System.out.println();
+                psocket.send(packet);
+
+
+                } catch (SocketException ex) {
+                Logger.getLogger(tset.class.getName()).log(Level.SEVERE, null, ex);
+            }catch(Exception e){
+                
+            }
         }
+        
+        this.jTextAreaPriSendPanel.setText("");
     }//GEN-LAST:event_jButtonPriSendActionPerformed
 
     private void jButtonPriCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPriCloseActionPerformed
