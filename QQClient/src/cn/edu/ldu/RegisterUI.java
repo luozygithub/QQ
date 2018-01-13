@@ -8,6 +8,16 @@ package cn.edu.ldu;
 import java.awt.Toolkit;
 import cn.edu.ldu.cls.User;
 import cn.edu.ldu.util.Dbutil;
+import cn.edu.ldu.util.Translate;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import cn.edu.ldu.util.Message;
 /**
  *
  * @author 罗中运
@@ -184,23 +194,48 @@ public class RegisterUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRegisterSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterSubmitActionPerformed
-        // TODO add your handling code here:
-        User user=new User();
-        user.setId(jTextFieldRegisterId.getText());
-        user.setPassword(Cryptography.getHash(jPasswordRegister.getText(), "SHA-256")); //密码 
-        //user.setPassword(jPasswordRegister.getText());
-        System.out.println(Cryptography.getHash(jPasswordRegister.getText(), "SHA-256"));
-        System.out.println(Cryptography.getHash(jPasswordRegister.getText(), "SHA-256"));
-       
-              
-        user.setTel(jTextFieldRegisterTel.getText());
-        user.setNickname(jTextFieldNickname.getText());
-        Dbutil dbutil=new Dbutil();
-        dbutil.Register(user);
+        try {
+            // TODO add your handling code here:
+            User user=new User();
+            user.setId(jTextFieldRegisterId.getText());
+            user.setPassword(Cryptography.getHash(jPasswordRegister.getText(), "SHA-256")); //密码
+            //user.setPassword(jPasswordRegister.getText());
+             
+            user.setTel(jTextFieldRegisterTel.getText());
+            user.setNickname(jTextFieldNickname.getText());
+            /*
+            Dbutil dbutil=new Dbutil();
+            dbutil.Register(user);
+            */
+            Message reMessage=new Message();
+            DatagramSocket clientSocket;
+            reMessage.setType("M_Register");
+            reMessage.setUserId(jTextFieldRegisterId.getText());
+            reMessage.setTel(jTextFieldRegisterTel.getText());
+            reMessage.setPassword(Cryptography.getHash(jPasswordRegister.getText(), "SHA-256"));
+            clientSocket = new DatagramSocket();
+            
+            String remoteName="127.0.0.1";
+            InetAddress remoteAddr=InetAddress.getByName(remoteName);
+         
+            byte[] data=Translate.ObjectToByte(reMessage); //消息对象序列化
+            //定义登录报文
+            DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,50000);
+            clientSocket.send(packet);
+            
+           
+        } catch (SocketException ex) {
+            Logger.getLogger(RegisterUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(RegisterUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.dispose();
+            LoginUI re=new LoginUI(this, rootPaneCheckingEnabled); //创建客户机界面
+            re.setVisible(true);
         
-        this.dispose(); 
-        LoginUI re=new LoginUI(this, rootPaneCheckingEnabled); //创建客户机界面
-        re.setVisible(true);
+        
     }//GEN-LAST:event_jButtonRegisterSubmitActionPerformed
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed

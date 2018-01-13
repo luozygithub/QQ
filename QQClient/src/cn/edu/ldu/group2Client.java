@@ -65,7 +65,8 @@ public class group2Client {
         }
 	public group2Client(String clientname){
 			
-
+                JLabel newlabel = new JLabel("1501罗中运20152203162");
+                jp1.add(newlabel);
 		jp.setLayout(new GridLayout(2,1,10,10));
 		jp.add(jsp);
 		jp.add(jsp1);
@@ -175,9 +176,6 @@ public class group2Client {
 				// TODO 自动生成方法存根
 				
 				//System.out.println(jcb.getSelectedItem()); //测试
-				
-			
-					
 				 if(jcb.getSelectedItem().equals("隐身")){
 					
 					cm = new Message("hide",sc.getLocalSocketAddress().toString());
@@ -212,10 +210,8 @@ public class group2Client {
 			Message m;
 				try {
 					ObjectInputStream ois = new ObjectInputStream(sc.getInputStream());
-					
 					while(true){
 						m = (Message)ois.readObject();
-						
 						if(m.name.equals("##")){
 							//jtainput.append(m.toString()); //test
 							dlm.removeAllElements();

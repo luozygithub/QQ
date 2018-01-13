@@ -71,19 +71,12 @@ public class tset extends javax.swing.JFrame {
          DatagramSocket clientSocket;
         try {
             clientSocket = new DatagramSocket();
-      
-      
-       
-       
-        //构建用户登录消息
-        cn.edu.ldu.util.Message msg=new cn.edu.ldu.util.Message();
-        msg.setUserId("123");//登录名       
-        msg.setPassword("785"); //密码       
-        //登录消息类型
+cn.edu.ldu.util.Message msg=new cn.edu.ldu.util.Message();//
+    
         String remoteName="127.0.0.1";
         InetAddress remoteAddr=InetAddress.getByName(remoteName);
-        msg.setToAddr(remoteAddr); //目标地址
-        msg.setToPort(51110); //目标端口        
+        msg.setToAddr(remoteAddr); 
+        msg.setToPort(51110);         
         byte[] data=Translate.ObjectToByte(msg); //消息对象序列化
         //定义登录报文
         DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,51110);

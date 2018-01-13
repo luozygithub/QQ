@@ -9,11 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 import cn.edu.ldu.util.Dbutil;
-
-/**
- * ReceiveMessage，服务器接收消息和处理消息的线程类
- * @author 董相志，版权所有2016--2018，upsunny2008@163.com
- */
+import cn.edu.ldu.cls.ReUser;
 public class ReceiveMessage extends Thread {
     private DatagramSocket serverSocket; //服务器套接字
     private DatagramPacket packet;  //报文
@@ -21,11 +17,7 @@ public class ReceiveMessage extends Thread {
     private byte[] data=new byte[8096]; //8K字节数组
     private ServerUI parentUI; //消息窗口  
     
-    /**
-     * 构造函数
-     * @param socket 会话套接字
-     * @param parentUI 父类
-     */
+   
     public ReceiveMessage(DatagramSocket socket,ServerUI parentUI) {
         serverSocket=socket;
         this.parentUI=parentUI;
@@ -157,6 +149,13 @@ public class ReceiveMessage extends Thread {
                 serverSocket.send(newPacket);
       
                 
+            }else if (msg.getType().equalsIgnoreCase("M_Register")) { //是其他用户下线消息
+                ReUser reUser=new ReUser();
+                reUser.setId(msg.getUserId());
+                reUser.setPassword(msg.getPassword());
+                reUser.setTel(msg.getTel());
+                Dbutil dbutil=new Dbutil();
+                dbutil.Register(reUser);
             }//end if
             } catch (Exception e) {
                 System.out.println("ReceiveMessage");

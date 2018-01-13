@@ -60,7 +60,7 @@ public class LoginUI extends javax.swing.JDialog {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/xiala_1.png"))); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("登录界面");
+        setTitle("登录界面@1501罗中运20152203162");
         setBackground(new java.awt.Color(204, 255, 255));
         setIconImage(null);
         setResizable(false);

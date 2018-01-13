@@ -11,7 +11,7 @@ public class LMessage implements Serializable {
     private InetAddress toAddr=null; //目标用户地址
     private int toPort; //目标用户端口
     private String targetId=null; //目标用户id
-       private String targetUser=null; //目标用户id
+    private String targetUser=null; //目标用户id
 
     public String getTargetUser() {
         return targetUser;

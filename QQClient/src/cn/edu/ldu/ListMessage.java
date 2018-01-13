@@ -62,18 +62,15 @@ public class ListMessage extends Thread{
                     parentUI.FriendList.setModel(listModel);
                           System.out.println("M_QUIT");
                 }else if(lmsg.getType().equalsIgnoreCase("siliao")){
-                    System.out.println("daolesiliaole");
                     chatpageUI=new ChatpageUI(lmsg.getUserId(),lmsg.getUserId(),ListSocket); //创建客户机界面
                     chatpageUI.setTitle(lmsg.getTargetUser()); //设置标题
                     chatpageUI.setVisible(true);
-                    
                     Calendar now = Calendar.getInstance();
                     chatpageUI.jTextAreaPriChatPanel.append(now.get(Calendar.HOUR_OF_DAY) + ":"
                       + now.get(Calendar.MINUTE)+"\n"+lmsg.getText());
                 }else if(lmsg.getType().equalsIgnoreCase("xiaoxi")){
                    chatpageUI.jTextAreaPriChatPanel.append("\n"+lmsg.getText());
                 }
-          
               }catch (Exception ex) {
                   System.out.println("ListMessage");
               }//end try

@@ -59,8 +59,11 @@ public class ChatpageUI extends javax.swing.JFrame {
         jTextAreaPriSendPanel = new javax.swing.JTextArea();
         jButtonPriSend = new javax.swing.JButton();
         jButtonPriClose = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("1501罗中运20152203162");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("聊天窗口"));
 
@@ -72,7 +75,8 @@ public class ChatpageUI extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -87,23 +91,25 @@ public class ChatpageUI extends javax.swing.JFrame {
 
         jTextAreaPriSendPanel.setColumns(20);
         jTextAreaPriSendPanel.setRows(5);
+        jTextAreaPriSendPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextAreaPriSendPanelKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTextAreaPriSendPanel);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jButtonPriSend.setBackground(new java.awt.Color(102, 102, 0));
@@ -122,33 +128,48 @@ public class ChatpageUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("1501-罗中运-20152203162");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/ldu/images/info.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(jButtonPriClose)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonPriSend)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(142, Short.MAX_VALUE)
-                .addComponent(jButtonPriClose)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonPriSend)
-                .addGap(126, 126, 126))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonPriClose)
                     .addComponent(jButtonPriSend)
-                    .addComponent(jButtonPriClose))
-                .addContainerGap())
+                    .addComponent(jLabel1))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -158,8 +179,7 @@ public class ChatpageUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(flag){
             try {
-
-
+                this.jTextAreaPriChatPanel.append(this.jTextAreaPriSendPanel.getText());
                 //向服务器要对方端口
                 cn.edu.ldu.util.LMessage lmsg=new cn.edu.ldu.util.LMessage();
                 lmsg.setText(this.jTextAreaPriSendPanel.getText());
@@ -185,7 +205,7 @@ public class ChatpageUI extends javax.swing.JFrame {
             flag=false;
         }else{
              try {
-               
+                   this.jTextAreaPriChatPanel.append(this.jTextAreaPriSendPanel.getText());
                cn.edu.ldu.util.LMessage lmsg=new cn.edu.ldu.util.LMessage();
                 lmsg.setText(this.jTextAreaPriSendPanel.getText());
                 //登录消息类型
@@ -217,6 +237,67 @@ public class ChatpageUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose(); 
     }//GEN-LAST:event_jButtonPriCloseActionPerformed
+
+    private void jTextAreaPriSendPanelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaPriSendPanelKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            if(flag){
+               try {
+
+                   this.jTextAreaPriChatPanel.append(this.jTextAreaPriSendPanel.getText());
+                   //向服务器要对方端口
+                   cn.edu.ldu.util.LMessage lmsg=new cn.edu.ldu.util.LMessage();
+                   lmsg.setText(this.jTextAreaPriSendPanel.getText());
+                   //登录消息类型
+                   String remoteName="127.0.0.1";
+                   InetAddress remoteAddr=InetAddress.getByName(remoteName);
+                   lmsg.setType("M_USER");
+                   lmsg.setTargetId(whochat);//告诉服务器要找谁
+                   lmsg.setText(this.jTextAreaPriSendPanel.getText());
+                   lmsg.setToPort(psocket.getLocalPort());
+                   lmsg.setTargetUser(myname);//告诉对方我是谁
+                   byte[] data=Translate.ObjectToByte(lmsg); //消息对象序列化
+                   //定义登录报文
+                   DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,60000);
+                   System.out.println();
+                   psocket.send(packet);
+
+
+                   } catch (SocketException ex) {
+                   Logger.getLogger(tset.class.getName()).log(Level.SEVERE, null, ex);
+               }catch(Exception e){
+               }
+               flag=false;
+           }else{
+                try {
+                      this.jTextAreaPriChatPanel.append(this.jTextAreaPriSendPanel.getText());
+                  cn.edu.ldu.util.LMessage lmsg=new cn.edu.ldu.util.LMessage();
+                   lmsg.setText(this.jTextAreaPriSendPanel.getText());
+                   //登录消息类型
+                   String remoteName="127.0.0.1";
+                   InetAddress remoteAddr=InetAddress.getByName(remoteName);
+                   lmsg.setType("xiaoxi");
+                   lmsg.setTargetId(whochat);//告诉服务器要找谁
+                   lmsg.setText(this.jTextAreaPriSendPanel.getText());
+                   lmsg.setToPort(psocket.getLocalPort());
+                   lmsg.setTargetUser(myname);//告诉对方我是谁
+                   byte[] data=Translate.ObjectToByte(lmsg); //消息对象序列化
+                   //定义登录报文
+                   DatagramPacket packet=new DatagramPacket(data,data.length,remoteAddr,60000);
+                   System.out.println();
+                   psocket.send(packet);
+
+
+                   } catch (SocketException ex) {
+                   Logger.getLogger(tset.class.getName()).log(Level.SEVERE, null, ex);
+               }catch(Exception e){
+
+               }
+           }
+
+           this.jTextAreaPriSendPanel.setText("");
+       }
+    }//GEN-LAST:event_jTextAreaPriSendPanelKeyPressed
 
     /**
      * @param args the command line arguments
@@ -257,6 +338,8 @@ public class ChatpageUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonPriClose;
     private javax.swing.JButton jButtonPriSend;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

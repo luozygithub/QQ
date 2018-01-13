@@ -66,11 +66,23 @@ public class Dbutil {
                     ResultSet rs = statement.executeQuery(sql);
 
                     if (rs.next()){
-                          String encryptPassword=Cryptography.getHash(user.getPassword(), "SHA-256");
-                         
-                          String sql2 ="UPDATE user SET password='"+encryptPassword+"' WHERE id='"+user.getId()+"'";
-                          statement.executeUpdate(sql2);
-                    }
+                      
+                    	String sql2="select * from user where Tel='"+Tel+"'";
+				rs=statement.executeQuery(sql2);
+				if(rs.next()){
+                                    String encryptPassword=Cryptography.getHash(user.getPassword(), "SHA-256");
+                                     JOptionPane.showMessageDialog(null, "更新密码成功");
+                                    String sql3 ="UPDATE user SET password='"+encryptPassword+"' WHERE id='"+user.getId()+"'";
+                                    statement.executeUpdate(sql3);
+                                }else{
+                                        JOptionPane.showMessageDialog(null, "手机号错误");
+                                }
+                     
+                     
+                    }else{
+                                   JOptionPane.showMessageDialog(null, "用户名错误");
+                    
+                }
                 }catch(Exception e){
                      JOptionPane.showMessageDialog(null, "更新密码失败", "错误提示", JOptionPane.ERROR_MESSAGE);
                 }

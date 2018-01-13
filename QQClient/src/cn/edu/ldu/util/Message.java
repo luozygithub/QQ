@@ -17,7 +17,15 @@ public class Message implements Serializable {
     private String targetId=null; //目标用户id
      private String targetUser=null; //目标用户id
      private int targetPort;
+     private String Tel;
 
+    public String getTel() {
+        return Tel;
+    }
+
+    public void setTel(String Tel) {
+        this.Tel = Tel;
+    }
     public int getTargetPort() {
         return targetPort;
     }

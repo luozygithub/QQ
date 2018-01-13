@@ -77,28 +77,20 @@ public class ListServer extends Thread {
                     serverSocket.send(newPacket);
                 }//end for 
             }else if(lmsg.getType().equalsIgnoreCase("M_USER")){
-                   System.out.println("M_USER");
-                 System.out.println("5");
                 int portString=0;
-                 String touserString=lmsg.getTargetUser();
+                String touserString=lmsg.getTargetUser();
                 for (int i=0;i<userList.size();i++) { 
                        System.out.println(userList.get(i).getUserId()+"port"+userList.get(i).getPacket().getPort());
                       if (touserString.equals(userList.get(i).getUserId())){
                          portString=userList.get(i).getPacket().getPort();
                       }
                 }
-                System.out.println("6");
-     
-                System.out.println("myport"+lmsg.getToPort()+"...");
-                System.out.println("portString:"+portString);
                 lmsg.setType("siliao");
                 lmsg.setText("say:"+lmsg.getText());
                 lmsg.setTargetId(userId);
                 byte[] buffer=Translate.ObjectToByte(lmsg);
                 DatagramPacket newPacket=new DatagramPacket(buffer,buffer.length,packet.getAddress(),portString);
                 serverSocket.send(newPacket);
-                System.out.println("7");
-                
             }else if(lmsg.getType().equalsIgnoreCase("xiaoxi")){
                     System.out.println("xiaoxi");
                  System.out.println("8");

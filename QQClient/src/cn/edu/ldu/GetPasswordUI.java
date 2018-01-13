@@ -60,6 +60,7 @@ public class GetPasswordUI extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("找回密码@1501罗中运20152203162");
 
         jLabel1.setFont(new java.awt.Font("微软雅黑", 1, 18)); // NOI18N
         jLabel1.setText("id：");
@@ -172,7 +173,7 @@ public class GetPasswordUI extends javax.swing.JFrame {
         String passwordmsg=getPassword.GetPassword(user);
         Dbutil dbutil=new Dbutil();
         dbutil.ChangePw(user);
-        JOptionPane.showMessageDialog(rootPane, "更新密码成功");
+     
     }//GEN-LAST:event_jButtonGetpasswordSubmitActionPerformed
 
     /**
